@@ -14,7 +14,7 @@ class behavior extends Bash
     public function index()
     {
         $map = $this->_initMap();
-        $this->lists('user_behavior_log', $map, 'id desc');
+        $this->lists('admin_behavior_log', $map, 'id desc');
         // $list = (new Blog())->where($map)->order('id desc')->paginate(10);
         // $this->assign('_list', $list);
         return $this->fetch('index');
