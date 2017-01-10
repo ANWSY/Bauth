@@ -28,18 +28,6 @@
     <div class="container">
     <form action="{:url('AuthManager/updateGroup')}" enctype="application/x-www-form-urlencoded" method="POST"
             class="ajaxForm">
-        <!-- <div class="form-group">
-            <label class="col-sm-12">所在菜单域<span>(管理后台 || 商城 等其他开发者配置的模块)</span></label>
-            <div class="col-lg-3">
-            <select class="form-control" name="module">
-                {volist name=":config('menu_module')" id="vo"}
-                <option value="{$key}">
-                    {$vo}
-                </option>
-                {/volist}
-            </select>
-            </div>
-        </div> -->
         <div class="form-group">
             <label for="auth-title" class="col-sm-12">用户组</label>
             <div class="col-lg-6">

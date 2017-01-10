@@ -3,8 +3,8 @@ namespace app\admin\model;
 
 use think\Model;
 
-class UserBehaviorLog extends Model{
-    protected $table = 'think_user_behavior_log';
+class AdminBehaviorLog extends Model{
+    protected $table = 'think_admin_behavior_log';
     // protected $pk = 'id';
     // 不起做用
     // protected $insert = ['password'];

@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use app\admin\model\UserBehaviorLog as Blog;
+use app\admin\model\AdminBehaviorLog as Alog;
 /**
  * 用户行为
  */
@@ -26,7 +26,7 @@ class behavior extends Bash
      */
     public function detail($id)
     {
-        $info = Blog::get($id)->toArray();
+        $info = Alog::get($id)->toArray();
         $this->assign('_info', $info);
         return $this->fetch();
     }
