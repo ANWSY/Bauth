@@ -17,7 +17,7 @@ Bauth权限系统的目标是做一个权限完善且多模块的后台管理系
 
 
 > 演示地址：
-地址 ： http://demo.bauth.exwechat.com 
+地址 ： http://demo.bauth.exwechat.com/index.php?s=admin 
 超级管理员账户  ：  admin      admin
 一般权限有户 ： demo       demo     
 
