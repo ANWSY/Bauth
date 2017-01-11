@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\lib\Administrator as AdminApi;
 use app\admin\model\Administrator as AdminModel;
 
 class Administrator extends Bash
@@ -13,10 +12,9 @@ class Administrator extends Bash
         return $this->fetch('base/index');
     }
 
-
     public function userlist()
     {
-        $this->lists('administrator', ['status'=>array('egt', 0)], 'id desc');
+        $this->lists('administrator', ['status' => array('egt', 0)], 'id desc');
         // $list = db('administrator')->where(['status'=>array('egt', 0)])->paginate(10);
         // \app\lib\intParse::int_to_string($list);
         // $this->assign('_list', $list);
@@ -31,11 +29,11 @@ class Administrator extends Bash
     {
         $id = $this->inputOrError('id', '用户ID必须');
         $info = AdminModel::get($id)->toArray();
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
 
         }
 
-        $map = ['module'=>'admin', 'status'=>['EGT', 0]];
+        $map = ['module' => 'admin', 'status' => ['EGT', 0]];
         $groupList = db('AuthGroup')->where($map)->order('id asc')->paginate(10);
         $this->assign('_groupList', $groupList);
         $this->assign('_info', $info);
@@ -56,27 +54,27 @@ class Administrator extends Bash
     {
         $id = $this->request->param('id');
         $data = $this->request->param(false);
-        if($id){
+        if ($id) {
             $info = AdminModel::get($id);
-            $ret = $info->update($data, ['id'=>$id]);
-        }else{
+            $ret = $info->update($data, ['id' => $id]);
+        } else {
             $info = new AdminModel();
             $info->data($data);
             $info->password = md5($this->request->param('password'));
             $ret = $info->save();
         }
-        if($ret){
+        if ($ret) {
             return $this->success('操作成功', url('userlist'));
-        }else{
+        } else {
             $this->error('操作失败，请稍后再试');
         }
     }
 
     /**
      * 修改昵称初始化
-     * @author huajie <banhuajie@163.com>
      */
-    public function updateNickname(){
+    public function updateNickname()
+    {
         // $nickname = db('administrator')->getFieldByUid($this->uid, 'nickname');
         $nickname = db('administrator')->where('id', $this->uid)->value('nickname');
         $this->assign('nickname', $nickname);
@@ -86,90 +84,78 @@ class Administrator extends Bash
 
     /**
      * 修改昵称提交
-     * @author huajie <banhuajie@163.com>
      */
-    public function submitNickname(){
+    public function submitNickname()
+    {
         //获取参数
         $nickname = input('post.nickname');
         empty($nickname) && $this->error('请输入昵称');
         // $password = input('post.password');
         // empty($password) && $this->error('请输入密码');
 
-        $res = db('administrator')->where(array('id'=>$this->uid))->update(['nickname'=>$nickname]);
+        $res = db('administrator')->where(array('id' => $this->uid))->update(['nickname' => $nickname]);
 
-        if($res !== false){
+        if ($res !== false) {
             // $userInfo = \Think\Session::get('userInfo');
             // $userInfo['nickname'] = $nickname;
             \Think\Session::set('userInfo.nickname', $nickname);
             return $this->success('修改昵称成功！');
-        }else{
+        } else {
             $this->error('修改昵称失败！');
         }
     }
 
     /**
      * 修改密码初始化
-     * @author huajie <banhuajie@163.com>
      */
-    public function updatePassword(){
+    public function updatePassword()
+    {
         // $this->meta_title = '修改密码';
         return $this->fetch();
     }
 
     public function updatePassword_admin()
     {
-        if(!is_admin($this->uid)){
-            $this->error('无权访问');
-        }
-        if($this->request->isPost()){
+        if ($this->request->isPost()) {
             $uid = input('uid');
             $newPassword = input('password');
             $rePassword = input('repassword');
-            if($newPassword != $rePassword){
+            if ($newPassword != $rePassword) {
                 $this->error('两次输入密码不相同');
             }
-            $ret = AdminApi::resetPassword($this->uid, $newPassword);
-            if($ret){
+            $ret = (new AdminModel)->resetPassword($this->uid, $newPassword);
+            if ($ret) {
                 return $this->success('重置用户密码成功');
-            }else{
+            } else {
                 $this->error('重置用户密码失败');
             }
-        }else{
+        } else {
             return $this->fetch();
         }
     }
 
     /**
      * 修改密码提交
-     * @author huajie <banhuajie@163.com>
      */
-    public function submitPassword(){
+    public function submitPassword()
+    {
         //获取参数
-        $password   =   input('post.old');
+        $password = input('post.old');
         empty($password) && $this->error('请输入原密码');
-        $data['password'] = input('post.password');
-        empty($data['password']) && $this->error('请输入新密码');
+        $newPwd = input('post.password');
+        empty($newPwd) && $this->error('请输入新密码');
         $repassword = input('post.repassword');
         empty($repassword) && $this->error('请输入确认密码');
 
-        if($data['password'] !== $repassword){
+        if ($newPwd !== $repassword) {
             $this->error('您输入的新密码与确认密码不一致');
         }
 
-        // $userLib    =   new AdminApi();
-        $res    =   AdminApi::updateInfo($this->uid, $password, $data);
-        if($res){
+        $res = (new AdminModel)->resetPassword($this->uid, $newPwd);
+        if ($res) {
             return $this->success('修改密码成功！');
-        }else{
+        } else {
             $this->error('修改失败');
         }
     }
-
-    public function group()
-    {
-    	print_r(config('CONFIG_GROUP_LIST'));
-    	$this->assign('list', []);
-    	return $this->fetch();
-    }
-
 }

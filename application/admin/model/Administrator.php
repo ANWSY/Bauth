@@ -6,13 +6,6 @@ use think\Session;
 
 class Administrator extends Model{
     protected $table = 'think_administrator';
-    // protected $pk = 'id';
-    // 不起做用
-    // protected $insert = ['password'];
-    // public function setNameAttr($value)
-    // {
-    //     return md5($value);
-    // }c
 
     //获取用户信息
     public function loginInfo()
@@ -53,19 +46,8 @@ class Administrator extends Model{
         return $ret;
     }
 
-    /**
-     * 更新用户信息
-     * @author baiyouwen 
-     */
-    public function updateInfo($uid, $password, $data)
-    {
-        $passwd =  $this->encryptPassword($password);
-        $ret = $this->where(['id'=>$uid, 'password'=>$passwd])->update($data);
-        return $ret;
-    }
-
     // 密码加密
-    public function encryptPassword($password, $salt='', $encrypt='md5')
+    protected function encryptPassword($password, $salt='', $encrypt='md5')
     {
         return $encrypt($password.$salt);
     }

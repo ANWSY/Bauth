@@ -99,7 +99,7 @@ class AuthManager extends Bash
         $rules = '';
 
         $allGroup = db('auth_group')->field('id,title')->where(['status'=>1])->select();
-        $sql ="SELECT `id`,`rules` FROM `think_auth_group_access` AS a, `think_auth_group` AS g WHERE a.uid=$uid AND a.group_id=g.id";
+        $sql ="SELECT `id`,`rules` FROM `think_auth_group_access` AS a, `think_auth_group` AS g WHERE a.uid=$uid AND a.group_id=g.id AND g.status=1";
         $ruleList = db('')->query($sql);
 
         if($ruleList){
