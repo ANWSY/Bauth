@@ -10,6 +10,7 @@ class Bauth{
     private $_rootPower = false;
 
 
+
     public function __construct($uid, $module)
     {
         $this->_uid = $uid;
@@ -21,11 +22,39 @@ class Bauth{
         $this->_allowIds = $this->_loadAllowIdsByUid($uid);
         // 获取有权限的菜单
         $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($module);
-        // echo '<pre>';
-        // print_r( $menuList );
-        // exit('</pre>');
         // 生成权限数组
         $this->_allowList = $this->_generateList($menuList);
+        $pub = $this->_publicAllow();
+        array_merge_recursive_distinct($this->_allowList, $pub);
+    }
+
+
+    private function _publicAllow()
+    {
+        $con = [
+            'admin' => [
+                'index' => [
+                    'index' => '',
+                    'introduce' => '',
+                    'developer' => '',
+                    'datetimepiker_demo' => '',
+                    'ajaxsubmit_demo' => '',
+                    'ajaxfileupload_demo' => '',
+                    'umeditor_demo' => '',
+                    'multiple_demo' => '',
+                    'menu_demo' => '',
+                ],
+                'administrator'=>[
+                    'updatenickname' => '',
+                    'submitnickname' => '',
+                    'updatepassword' => '',
+                    'submitpassword' => '',
+                ]
+            ],
+        ];
+        $pub = config('PUBLIC_ALLOW') == NULL? []: config('PUBLIC_ALLOW');
+        array_merge_recursive_distinct($con, $pub);
+        return $con;
     }
 
     /**
@@ -49,7 +78,7 @@ class Bauth{
 
     private function _getAllRules($ret)
     {
-        $rules = $this->_publicRules();
+        $rules = '';
         foreach($ret as $value){
                 $rules .= $value['rules'].',';
             }
@@ -59,10 +88,6 @@ class Bauth{
         return $rules;
     }
 
-    private function _publicRules()
-    {
-        return '1,189,108,109';
-    }
 
     /**
      * 生成权限数组
@@ -118,6 +143,10 @@ class Bauth{
         }
         // 检查是否有访问权限
         if(!isset($this->_allowList[$this->_module][$controller][$action])){
+            echo '<pre>';
+            echo $controller, '-', $action,'<br/>';
+            print_r( $this->_allowList);
+            exit('</pre>');
             return false;
         }
         // 检查参数
