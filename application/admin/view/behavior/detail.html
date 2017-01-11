@@ -32,7 +32,13 @@
         {volist name="_info" id="vo"}
         <tr>
         <td class="text-right">{$key} :</td>
-        <td class="text-overflow">{$vo}</td>
+        <td class="text-overflow">
+        {if condition="$key EQ 'ip'"}
+          {:long2ip($vo)}
+        {else /}
+          {$vo}
+        {/if}
+        </td>
         </tr>
         {/volist}
       </tbody>

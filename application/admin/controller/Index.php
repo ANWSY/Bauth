@@ -55,7 +55,7 @@ class Index extends Bash
     // 菜单模块使用案例
     public function menu_demo()
     {
-        $module = 'shop';
+        $module = 'admin';
         $menu = new Menu();
         $list = $menu->getMenu($module);
         $this->assign('list', $list);
