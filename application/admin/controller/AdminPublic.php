@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use think\Controller;
 use think\captcha;
-use app\lib\Administrator as Admin;
+use app\admin\model\Administrator as adminModel;
 
 /**
  * 管理后台 登录
@@ -24,13 +24,14 @@ class AdminPublic extends Controller {
     public function login() {
         if ($this->request->isPost()) {
 
-            if (!captcha_check($this->request->param('verify'), 'admin_login')) {
-                $this->error('验证码不正确');
-            }
+            // if (!captcha_check($this->request->param('verify'), 'admin_login')) {
+            //     $this->error('验证码不正确');
+            // }
 
             $username = $this->request->param('username');
             $password = $this->request->param('password');
-            $info = Admin::login($username, $password);
+            // $model = new adminModel();
+            $info = (new adminModel())->login($username, $password);
             if ($info['code'] === 1) {
                 //后台系统用户行为记录
                 \app\lib\BehaviorRecording::writeLog($info['data']['id'], 'AdminPublic', 'login', '登录');
