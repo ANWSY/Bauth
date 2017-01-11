@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use think\Controller;
 use think\captcha;
+use think\Session;
 use app\admin\model\Administrator as adminModel;
 
 /**
@@ -32,9 +33,13 @@ class AdminPublic extends Controller {
             $password = $this->request->param('password');
             // $model = new adminModel();
             $info = (new adminModel())->login($username, $password);
-            if ($info['code'] === 1) {
+            if ($info) {
+                $uid =  Session::get('userInfo');
+                if(!$uid){
+                    $this->error('登录错误');
+                }
                 //后台系统用户行为记录
-                \app\lib\BehaviorRecording::writeLog($info['data']['id'], 'AdminPublic', 'login', '登录');
+                \app\lib\BehaviorRecording::writeLog($uid, 'AdminPublic', 'login', '登录');
 
                 return $this->success('登录成功', url('Index/index'));
             } else {
@@ -50,7 +55,7 @@ class AdminPublic extends Controller {
         if ($user_id = is_login()) {
             //后台系统用户行为记录
             \app\lib\BehaviorRecording::writeLog($user_id, 'AdminPublic', 'logout', '退出登录');
-            Admin::logout();
+            (new adminModel())->logout();
             return $this->success('退出成功！', url('login'));
         } else {
             $this->redirect('login');

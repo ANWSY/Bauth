@@ -17,13 +17,13 @@ class Administrator extends Model{
     //获取用户信息
     public function loginInfo()
     {
-        return Session::get('serInfo', false);
+        return Session::get('userInfo', false);
     }
 
     //用户登录
     public function login($username, $password)
     {
-        $ret = $this->where(['username'=>$username])->find();
+        $ret = $this->where(['username'=>$username])->find()->toArray();
         if(!$ret){
             $this->error('用户不存在');
         }
