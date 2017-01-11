@@ -15,7 +15,7 @@ class Bauth{
         if(in_array($uid, [1])){
             $this->_rootPower = true;
         }
-        $this->_module = $module;
+        $this->_module = strtolower($module);
         // 获取有权限的ID
         $this->_allowIds = $this->_loadAllowIdsByUid($uid);
         // 获取有权限的菜单
@@ -71,9 +71,9 @@ class Bauth{
             return [];
         $allowArr = [];
         foreach ($menus as $key => $value) {
-            $m = $value['module'];
-            $c = $value['controller'];
-            $a = $value['action'];
+            $m = strtolower($value['module']);
+            $c = strtolower($value['controller']);
+            $a = strtolower($value['action']);
             if($value['type'] == 1){
                 $allowArr[$m][$c][$a] = $value['url'];
             }
@@ -104,6 +104,8 @@ class Bauth{
      */
     public function check($controller, $action, $params=[])
     {
+        $controller = strtolower($controller);
+        $action = strtolower($action);
         // 是否为超级用户
         if($this->_rootPower){
             return true;
