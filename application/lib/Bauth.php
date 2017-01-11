@@ -9,6 +9,7 @@ class Bauth{
     private $_module = '';  // admin shop
     private $_rootPower = false;
 
+
     public function __construct($uid, $module)
     {
         $this->_uid = $uid;
@@ -48,7 +49,7 @@ class Bauth{
 
     private function _getAllRules($ret)
     {
-        $rules = '';
+        $rules = $this->_publicRules();
         foreach($ret as $value){
                 $rules .= $value['rules'].',';
             }
@@ -56,6 +57,11 @@ class Bauth{
         $tempArr = array_unique(explode(',', $rules));
         $rules = implode(',', $tempArr);
         return $rules;
+    }
+
+    private function _publicRules()
+    {
+        return '1,189,108,109';
     }
 
     /**

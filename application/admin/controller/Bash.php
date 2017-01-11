@@ -25,7 +25,7 @@ class Bash extends Controller {
         $action = $this->request->action();
         $auth = new Bauth($this->uid, $module);
         if (!$auth->check($controller, $action)) {
-            $this->error('权限不足', url('AdminPublic/login'));
+            $this->error('权限不足');
         }
 
         $menu = new Menu($auth->getPower(), $auth->getAllowId());

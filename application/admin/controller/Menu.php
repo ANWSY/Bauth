@@ -105,12 +105,12 @@ class Menu extends Bash
 
     public function toogleHide($id, $value)
     {
-        return $this->editRows('Menu', ['id'=>array('in', $id)], ['hide'=>$value], []);
+        return $this->editRows('Menu', ['id'=>array('in', $id)], ['hide'=>$value], ['url'=> url('index')]);
     }
 
     public function toogledev($id, $value)
     {
-        return $this->editRows('Menu', ['id'=>array('in', $id)], ['is_dev'=>$value], []);
+        return $this->editRows('Menu', ['id'=>array('in', $id)], ['is_dev'=>$value], ['url'=> url('index')]);
     }
 
     public function tree_show()
