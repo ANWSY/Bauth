@@ -20,7 +20,7 @@ class AuthGroup extends Model{
 
     public static function groupUsers($group_id)
     {
-        $sql = "SELECT * FROM think_auth_group_access as ac,think_user as u WHERE ac.uid=u.id AND ac.group_id=$group_id";
+        $sql = "SELECT * FROM think_auth_group_access as ac,think_administrator as u WHERE ac.uid=u.id AND ac.group_id=$group_id";
         $users = db('')->query($sql);
         return $users;
     }
