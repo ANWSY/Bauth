@@ -27,6 +27,7 @@ class Bash extends Controller {
         if (!$auth->check($controller, $action)) {
             $this->error('权限不足', url('AdminPublic/login'));
         }
+
         $menu = new Menu($auth->getPower(), $auth->getAllowId());
         $reqId = $menu->getId($module, $controller, $action);
         $reqRootId = $menu->getRootId($reqId);
@@ -87,6 +88,7 @@ class Bash extends Controller {
         }
         $method = $this->inputOrError('method'); // forbidRow deleteRow resumeRow
         $table = $this->inputOrError('target');
+        $table = $this->_safeTarget($table);
         $pk = $this->request->param('pk', 'id');
         $field = $this->request->param('targetField', 'status');
         $setValue = 0;
@@ -111,6 +113,22 @@ class Bash extends Controller {
             $this->error('操作失败');
         }
     }
+
+    /**
+     * 对表查行安全转换，避免表名暴露在外
+     * @author baiyouwen
+     */
+    private function _safeTarget($target='')
+    {
+        if(isset($this->_safeTargets[$target])){
+            return $this->_safeTargets[$target];
+        }
+        return $target;
+    }
+    private $_safeTargets = 
+    [
+        'user' => 'administrator',
+    ];
 
     /**
      * 公众方法 列表 分页输出

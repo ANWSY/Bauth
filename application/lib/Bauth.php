@@ -38,7 +38,24 @@ class Bauth{
     {
         $sql = "SELECT rules FROM `think_auth_group` AS g, `think_auth_group_access` AS a WHERE a.uid=$this->_uid AND g.id=a.group_id";
         $ret = db()->query($sql);
-        return $ret && $ret[0]['rules'] ? $ret[0]['rules'] : '';
+
+        $rules = '';
+        if($ret){
+            $rules = $this->_getAllRules($ret);
+        }
+        return $rules;
+    }
+
+    private function _getAllRules($ret)
+    {
+        $rules = '';
+        foreach($ret as $value){
+                $rules .= $value['rules'].',';
+            }
+        $rules = rtrim($rules, ',');
+        $tempArr = array_unique(explode(',', $rules));
+        $rules = implode(',', $tempArr);
+        return $rules;
     }
 
     /**
