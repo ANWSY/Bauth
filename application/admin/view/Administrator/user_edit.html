@@ -42,14 +42,14 @@
         <div class="form-group">
             <label class="col-sm-12">用户名<span class="check-tips"></span></label>
             <div class="col-sm-6">
-                <input type="text" class="form-control" name="username" value="{$_info.username|default=''}">
+                <input type="text" class="form-control" name="username" value="{$_info.username|default=''}" required="">
             </div>
         </div>
         {empty name="_info['id']"}
         <div class="form-group">
             <label class="col-sm-12">密码<span class="check-tips"></span></label>
             <div class="col-lg-6">
-                <input type="text" class="form-control" name="password" value="{$_info.password|default=''}">
+                <input type="text" class="form-control" name="password" value="{$_info.password|default=''}" required="" minlength="6">
             </div>
         </div>
         {/empty}
@@ -62,7 +62,7 @@
         <div class="form-group">
             <label class="col-sm-12">手机号<span class="check-tips"></span></label>
             <div class="col-lg-6">
-                <input type="text" class="form-control" name="mobile" value="{$_info.mobile|default=''}">
+                <input type="text" class="form-control" name="mobile" value="{$_info.mobile|default=''}" required="">
             </div>
         </div>
         <div class="form-group">

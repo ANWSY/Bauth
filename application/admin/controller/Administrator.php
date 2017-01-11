@@ -2,9 +2,15 @@
 namespace app\admin\controller;
 
 use app\admin\model\Administrator as AdminModel;
+use think\Validate;
 
 class Administrator extends Bash
 {
+    private $_rule = [
+        'username' => 'require|length:4,25',
+        'password' => 'require|length:4,32',
+        'mobile' => 'require|length:11',
+    ];
 
     public function index()
     {
@@ -54,6 +60,10 @@ class Administrator extends Bash
     {
         $id = $this->request->param('id');
         $data = $this->request->param(false);
+        $valid = new Validate($this->_rule);
+        if(!$valid->check($data)){
+            $this->error($valid->getError());
+        }
         if ($id) {
             $info = AdminModel::get($id);
             $ret = $info->update($data, ['id' => $id]);
