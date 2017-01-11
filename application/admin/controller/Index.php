@@ -57,7 +57,7 @@ class Index extends Bash
     {
         $module = 'shop';
         $menu = new Menu();
-        $list = $menu->getMenu('', $module, true);
+        $list = $menu->getMenu($module);
         $this->assign('list', $list);
         return $this->fetch();
     }

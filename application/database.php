@@ -15,7 +15,7 @@ return [
     // 服务器地址
     'hostname'       => 'xiaobaiMySQL.com',
     // 数据库名
-    'database'       => 'tp5',
+    'database'       => 'demo_bauth',
     // 用户名
     'username'       => 'demo_bauth',
     // 密码
