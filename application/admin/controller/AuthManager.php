@@ -130,9 +130,12 @@ class AuthManager extends Bash
     {
         $id = input('id', 0);
         $rules = isset($_POST['rules'])?$_POST['rules']:[];
-
+        sort($rules);
         $ruleIds = implode(',', $rules);
-        $ret = db('auth_group')->where('id', $id)->update(['rules' => $ruleIds]);
+        // echo '<pre>';
+        // print_r($ruleIds );
+        // exit('</pre>');
+        $ret = db('auth_group')->where(['id' => $id])->update(['rules' => $ruleIds]);
         if($ret !== false){
             return $this->success('成功', url('index'));
         }else{

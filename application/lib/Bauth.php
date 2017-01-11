@@ -25,7 +25,7 @@ class Bauth{
         // 生成权限数组
         $this->_allowList = $this->_generateList($menuList);
         $pub = $this->_publicAllow();
-        array_merge_recursive_distinct($this->_allowList, $pub);
+        $this->_allowList=array_merge_recursive_distinct($this->_allowList, $pub);
     }
 
 
@@ -53,7 +53,7 @@ class Bauth{
             ],
         ];
         $pub = config('PUBLIC_ALLOW') == NULL? []: config('PUBLIC_ALLOW');
-        array_merge_recursive_distinct($con, $pub);
+        $con = array_merge_recursive_distinct($con, $pub);
         return $con;
     }
 
@@ -98,6 +98,9 @@ class Bauth{
      */
     private function _generateList($menus)
     {
+        echo '<pre>';
+        print_r( $menus );
+        exit('</pre>');
         if(empty($menus))
             return [];
         $allowArr = [];
@@ -107,6 +110,7 @@ class Bauth{
             $a = strtolower($value['action']);
             if($value['type'] == 1){
                 $allowArr[$m][$c][$a] = $value['url'];
+                $allowArr[$m][$c][$a] = $value['id'].'_'.$value['url'];
             }
         }
         return $allowArr;

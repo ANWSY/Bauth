@@ -56,7 +56,7 @@ class Index extends Bash
     public function menu_demo()
     {
         $module = 'admin';
-        $menu = new Menu();
+        $menu = new Menu(true);
         $list = $menu->getMenu($module);
         $this->assign('list', $list);
         return $this->fetch();
