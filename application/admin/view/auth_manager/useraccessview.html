@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>用户授权查看</title>
+  <title>用户授权</title>
 
   <!-- Bootstrap -->
   <link href="/static/bootstrap-3.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -91,13 +91,16 @@
     <div class="panel-heading">用户所属角色组</div>
     <div class="panel-body">
       <div class="child_row">
+        <form class="ajaxForm" method="POST" action="#">
         {volist name="_allGroup" id="ag"}
         <div class="single" style="float: left;">
           <label class="checkbox" {notempty name="ag['id']"}title='{$ag.id}'{/notempty}></label>
-          <input class="groups" type="checkbox" value="{$ag.id}" disabled="disabled"/>
+          <input name="groupId[]" class="groups" type="checkbox" value="{$ag.id}"/>
           {$ag.title}
         </div>
         {/volist}
+        <button class="btn btn-sm btn-success" style="margin-left: 50px;">提 交</button>
+        </form>
       </div>
     </div>
     <ul class="list-group">
@@ -150,13 +153,36 @@
 </form>
 <!-- /访问授权 -->
 </div>
+<div class="hide">
+  {volist name="_allRule" id="vlist"}
+  <input type="hidden" name="rule_{$vlist.id}" value="{$vlist.rules}">
+  {/volist}
+</div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <script src="/static/form-3.51/jquery.form.js"></script>
 <link rel="stylesheet" href="/static/artDialog-6.0.4/css/ui-dialog.css">
 <script src="/static/artDialog-6.0.4/dist/dialog-min.js"></script>
 <script src="/Admin/js/ajaxSubmit.js"></script>
-
+<script type=text/javascript>
+// 自定义数组删除
+Array.prototype.del = function(n)
+{
+n = parseInt(n);
+if (n<0) return this;
+return this.slice(0,n).concat(this.slice(n+1, this.length+1));
+}
+ 
+Array.prototype.getIndex = function(ele)
+{
+    for (x in this){
+        if (this[x] == ele){
+            return x;
+        }
+    }
+    return -1;
+}
+</script>
 <script type="text/javascript" charset="utf-8">
 $('select[name=group]').change(function(){
     location.href = this.value;
@@ -180,6 +206,33 @@ $('select[name=group]').change(function(){
             $(this).closest('span').remove();
         }
     });
+
+    // 钩选权限预览
+    $('.groups').on('change', function(){
+      $('.auth_rules').each(function(){
+        $(this).prop('checked',false);
+      })
+      $('.groups').each(function(){
+        if($(this).is(':checked')){
+          var thisid = $(this).val();
+          var ruleIds = $("input[name='rule_"+thisid+"']").val();
+          if('' != ruleIds || 'undefined' != ruleIds){
+            var ruleArr = ruleIds.split(',');
+            $('.auth_rules').each(function(){
+                // if( $.inArray( parseInt(this.value,10),ruleArr )>-1 ){
+                if( ruleArr.getIndex(parseInt(this.value,10))>-1 ){
+                    $(this).prop('checked',true);
+                }
+            });
+          }
+        }
+      })
+    })
+
+
+
+
+
 
     //全选节点
     $('.rules_all').on('change',function(){

@@ -51,7 +51,7 @@
           <td>{$vo.head_ico}</td>
           <td>{$vo.status}</td>
           <td>
-            <a href="{:url('AuthManager/userAccessView', ['uid'=>$vo['id']])}">查看用户权限</a>
+            <a href="{:url('AuthManager/userAccessView', ['uid'=>$vo['id']])}">用户权限</a>
             <a href="{:url('user_edit', ['id'=>$vo['id']])}"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
             <a class="ajaxGet confirm" href="{:url('changeStatus', ['ids'=>$vo['id'], 'method'=>'deleteRow', 'target'=>'user'])}" ><span class="glyphicon glyphicon-remove"></span>删除</a>
             <!-- <div class="btn-group">

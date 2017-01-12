@@ -76,9 +76,13 @@ class AuthManager extends Bash
      */
     public function access(){
         $module = input('module', 'admin');
+        // 所有组
         $auth_group = db('auth_group')->where( array('status'=>array('egt','0'),'type'=>1) )->field('id,title,rules')->select();
+
+        // 菜单树
         $menuList = db('menu')->order('module')->select();
         $menuTree = list_to_tree($menuList,$pk='id',$pid='pid',$child='_child',$root=0);
+        // 当前组信息
         $this_group = $this->_selectOneGroup($auth_group, $this->request->param('group_id'));
         $this->assign('menu_module',  $module);
         $this->assign('node_list',  $menuTree);
@@ -98,10 +102,10 @@ class AuthManager extends Bash
         $groupids = '';
         $rules = '';
 
+        // 汇总用户所有权限
         $allGroup = db('auth_group')->field('id,title')->where(['status'=>1])->select();
         $sql ="SELECT `id`,`rules` FROM `think_auth_group_access` AS a, `think_auth_group` AS g WHERE a.uid=$uid AND a.group_id=g.id AND g.status=1";
         $ruleList = db('')->query($sql);
-
         if($ruleList){
             foreach($ruleList as $value){
                 $groupids .= $value['id'].',';
@@ -112,8 +116,15 @@ class AuthManager extends Bash
             $tempArr = array_unique(explode(',', $rules));
             $rules = implode(',', $tempArr);
         }
+
+        // 权限组拥有的权限
+        $allRule = db('auth_group')->field('id,rules')->where(['status'=>1])->select();
+
+        // 菜单树
         $menuList = db('menu')->order('module')->select();
         $menuTree = list_to_tree($menuList,$pk='id',$pid='pid',$child='_child',$root=0);
+
+        $this->assign('_allRule',  $allRule);
         $this->assign('_allGroup',  $allGroup);
         $this->assign('_groupids',  $groupids);
         $this->assign('node_list',  $menuTree);
@@ -132,9 +143,6 @@ class AuthManager extends Bash
         $rules = isset($_POST['rules'])?$_POST['rules']:[];
         sort($rules);
         $ruleIds = implode(',', $rules);
-        // echo '<pre>';
-        // print_r($ruleIds );
-        // exit('</pre>');
         $ret = db('auth_group')->where(['id' => $id])->update(['rules' => $ruleIds]);
         if($ret !== false){
             return $this->success('成功', url('index'));
