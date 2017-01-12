@@ -91,7 +91,7 @@
     <div class="panel-heading">用户所属角色组</div>
     <div class="panel-body">
       <div class="child_row">
-        <form class="ajaxForm" method="POST" action="#">
+        <form class="ajaxForm" method="POST" action="{:url('modify_user_groups')}">
         {volist name="_allGroup" id="ag"}
         <div class="single" style="float: left;">
           <label class="checkbox" {notempty name="ag['id']"}title='{$ag.id}'{/notempty}></label>
@@ -99,6 +99,8 @@
           {$ag.title}
         </div>
         {/volist}
+        <input type="hidden" name="uid" value="{:input('uid')}" />
+        <input type="hidden" name="groupids" value="{$_groupids}" />
         <button class="btn btn-sm btn-success" style="margin-left: 50px;">提 交</button>
         </form>
       </div>

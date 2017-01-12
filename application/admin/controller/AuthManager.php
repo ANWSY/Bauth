@@ -267,4 +267,27 @@ class AuthManager extends Bash
         }
     }
 
+    /**
+     * 修改用户所属于组
+     * @author baiyouwen
+     */
+    public function modify_user_groups()
+    {
+        // echo '<pre>';
+        print_r( $this->request->post(false) );
+        // exit('</pre>');
+        $uid = input('uid');
+        $groupids = input('groupids');
+        $groupId = input('groupId/a');
+
+        $current = explode(',', $groupids);
+
+        $reserve = array_diff($current, $groupId);
+        $new = array_diff($groupId, $current);
+        echo '<pre>';
+        print_r($reserve);
+        print_r( $new  );
+        exit('</pre>');
+    }
+
 }
