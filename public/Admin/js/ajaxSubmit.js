@@ -48,6 +48,11 @@ $(function() {
 
     // ajaxGet
     $('.ajaxGet, .ajax-get').bind('click', function(event){
+        if($(this).hasClass('confirm')){
+            if(!confirm('确认要执行该操作吗?')){
+                return false;
+            }
+        }
         var url = $(this).attr('href');
         var d = dialog({
             modal: true,
@@ -72,7 +77,6 @@ $(function() {
                 d.close().remove();
             }, 3000);
         })
-        event.preventDefault();
         return false;
     })
     // ajaxPost

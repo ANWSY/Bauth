@@ -61,7 +61,7 @@
 				{else/}
 				<a href="{:url('AuthManager/changeStatus?method=resumeRow&ids='.$vo['id'].'&target=auth_group')}" class="ajax-get">启用</a>
 				{/eq}
-				<a href="{:url('AuthManager/changeStatus?method=deleteRow&ids='.$vo['id'].'&target=auth_group')}" class="confirm ajax-get">删除</a>
+				<a href="{:url('AuthManager/changeStatus?method=deleteRow&ids='.$vo['id'].'&target=auth_group')}" class="confirm ajax-get confirm">删除</a>
                 </td>
 		</tr>
 		{/volist}

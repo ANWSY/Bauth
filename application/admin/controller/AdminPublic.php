@@ -34,7 +34,7 @@ class AdminPublic extends Controller {
             // $model = new adminModel();
             $info = (new adminModel())->login($username, $password);
             if ($info) {
-                $uid =  Session::get('userInfo');
+                $uid =  Session::get('userInfo.id');
                 if(!$uid){
                     $this->error('登录错误');
                 }
