@@ -87,7 +87,7 @@ class Menu
     public function getMenu($module='admin', $condition = [])
     {
         $intMap = $this->_Map();
-        $map = array_merge($condition, $intMap);
+        $map = array_merge($intMap, $condition);
         $map['module'] = $module;
         $ret = $this->_dbMenu->where($map)->select();
         return $ret;

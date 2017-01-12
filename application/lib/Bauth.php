@@ -21,7 +21,7 @@ class Bauth{
         // 获取有权限的ID
         $this->_allowIds = $this->_loadAllowIdsByUid($uid);
         // 获取有权限的菜单
-        $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($module);
+        $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($module, ['hide'=>['in', '0,1'], 'is_dev'=>['in', '0,1']]);
         // 生成权限数组
         $this->_allowList = $this->_generateList($menuList);
         $pub = $this->_publicAllow();
@@ -98,9 +98,6 @@ class Bauth{
      */
     private function _generateList($menus)
     {
-        echo '<pre>';
-        print_r( $menus );
-        exit('</pre>');
         if(empty($menus))
             return [];
         $allowArr = [];
@@ -110,7 +107,7 @@ class Bauth{
             $a = strtolower($value['action']);
             if($value['type'] == 1){
                 $allowArr[$m][$c][$a] = $value['url'];
-                $allowArr[$m][$c][$a] = $value['id'].'_'.$value['url'];
+                // $allowArr[$m][$c][$a] = $value['id'].'_'.$value['url'];
             }
         }
         return $allowArr;
@@ -147,10 +144,6 @@ class Bauth{
         }
         // 检查是否有访问权限
         if(!isset($this->_allowList[$this->_module][$controller][$action])){
-            echo '<pre>';
-            echo $controller, '-', $action,'<br/>';
-            print_r( $this->_allowList);
-            exit('</pre>');
             return false;
         }
         // 检查参数
