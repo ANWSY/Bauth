@@ -284,10 +284,38 @@ class AuthManager extends Bash
 
         $reserve = array_diff($current, $groupId);
         $new = array_diff($groupId, $current);
+        $addSql = $this->_createAddSql($uid, $new);
+        $delSql = $this->_createDelSql($uid, $delIds);
         echo '<pre>';
         print_r($reserve);
         print_r( $new  );
         exit('</pre>');
+    }
+
+    private function _createAddSql($uid=0, $data=[])
+    {
+        $table = config('database.prefix').'auth_group_access';
+        echo '<pre>';
+        print_r( $table );
+        exit('</pre>');
+        $sql = 'INSERT INTO '.$table.' (`uid`, `group_id`) VALUES %values%';
+        $values = '';
+        foreach($data as $v){
+            $values .= '(';
+            $values .= "'{$uid}',";
+            $values .= "'{$v}',";
+            $values .= '),';
+        }
+        $values = rtrim($values, ',');
+        $sql = str_replace('%values%', $values, $sql);
+        return $sql;
+    }
+
+    private function _createDelSql($uid=0, $group_ids='')
+    {
+        $table = config('database.prefix').'auth_group_access';
+        $sql = "DELETE FROM {$table} WHERE `uid`={$uid} AND `group_id` IN({$group_ids})";
+        return $sql;
     }
 
 }
