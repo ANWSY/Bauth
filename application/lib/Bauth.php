@@ -20,12 +20,19 @@ class Bauth{
         $this->_module = strtolower($module);
         // 获取有权限的ID
         $this->_allowIds = $this->_loadAllowIdsByUid($uid);
+        $this->_allowIds .= ','.$this->_publicIds();
         // 获取有权限的菜单
         $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($module, ['hide'=>['in', '0,1'], 'is_dev'=>['in', '0,1']]);
         // 生成权限数组
         $this->_allowList = $this->_generateList($menuList);
         $pub = $this->_publicAllow();
         $this->_allowList=array_merge_recursive_distinct($this->_allowList, $pub);
+    }
+
+    private function _publicIds()
+    {
+        $public = ['1', '189'];
+        return implode(',', $public);
     }
 
 
@@ -66,9 +73,8 @@ class Bauth{
      */
     private function _loadAllowIdsByUid($uid)
     {
-        $sql = "SELECT rules FROM `think_auth_group` AS g, `think_auth_group_access` AS a WHERE a.uid=$this->_uid AND g.id=a.group_id";
+        $sql = "SELECT rules FROM `think_auth_group` AS g, `think_auth_group_access` AS a WHERE a.uid=$this->_uid AND g.id=a.group_id AND g.status=1";
         $ret = db()->query($sql);
-
         $rules = '';
         if($ret){
             $rules = $this->_getAllRules($ret);

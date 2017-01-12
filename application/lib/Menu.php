@@ -133,6 +133,7 @@ class Menu
     //按组分二级菜单
     private function _listToGroup($sideMenu)
     {
+        $list = [];
         foreach ($sideMenu as $lk=>$lv){
             if($lv['hide'] == 1 || $lv['is_dev'] == 1){
                 continue;
