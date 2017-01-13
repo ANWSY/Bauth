@@ -273,37 +273,40 @@ class AuthManager extends Bash
      */
     public function modify_user_groups()
     {
-        // echo '<pre>';
-        print_r( $this->request->post(false) );
-        // exit('</pre>');
         $uid = input('uid');
         $groupids = input('groupids');
         $groupId = input('groupId/a');
 
         $current = explode(',', $groupids);
 
-        $reserve = array_diff($current, $groupId);
-        $new = array_diff($groupId, $current);
-        $addSql = $this->_createAddSql($uid, $new);
-        $delSql = $this->_createDelSql($uid, $delIds);
-        echo '<pre>';
-        print_r($reserve);
-        print_r( $new  );
-        exit('</pre>');
+        $remove = array_diff($current, $groupId);
+        $add = array_diff($groupId, $current);
+        if(!empty($remove)){
+            $delSql = $this->_createDelSql($uid, $remove);
+            $ret1 = db('')->execute($delSql);
+            if(!$ret1){
+                $this->error('操作失败，请稍后再试');
+            }
+        }
+        if(!empty($add)){
+            $addSql = $this->_createAddSql($uid, $add);
+            $ret2 = db('')->execute($addSql);
+            if(!$ret2){
+                $this->error('添加失败，请稍后再试');
+            }
+        }
+        return $this->success('用户权限修改成功', url('administrator/userlist'));
     }
 
     private function _createAddSql($uid=0, $data=[])
     {
         $table = config('database.prefix').'auth_group_access';
-        echo '<pre>';
-        print_r( $table );
-        exit('</pre>');
         $sql = 'INSERT INTO '.$table.' (`uid`, `group_id`) VALUES %values%';
         $values = '';
         foreach($data as $v){
             $values .= '(';
             $values .= "'{$uid}',";
-            $values .= "'{$v}',";
+            $values .= "'{$v}'";
             $values .= '),';
         }
         $values = rtrim($values, ',');
@@ -311,10 +314,13 @@ class AuthManager extends Bash
         return $sql;
     }
 
-    private function _createDelSql($uid=0, $group_ids='')
+    private function _createDelSql($uid=0, $removeIds='')
     {
+        if(is_array($removeIds)){
+            $removeIds = implode(',', $removeIds);
+        }
         $table = config('database.prefix').'auth_group_access';
-        $sql = "DELETE FROM {$table} WHERE `uid`={$uid} AND `group_id` IN({$group_ids})";
+        $sql = "DELETE FROM {$table} WHERE `uid`={$uid} AND `group_id` IN({$removeIds})";
         return $sql;
     }
 

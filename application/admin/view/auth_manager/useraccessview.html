@@ -78,12 +78,12 @@
 
 </style>
 
-<div class="title"><span class="h2">用户授权查看</span>:<span class="h4">用户ID = {:input('uid')}</span></div>
+<div class="title"><span class="h2">用户授权</span>:<span class="h4">用户ID = {:input('uid')}</span></div>
 
 <div class="container">
   {empty name="$_groupids"}
   <div class="alert alert-warning" role="alert">
-  该用户不属于任何角色组，因此，该用户没有任何权限
+  该用户不属于任何角色组，因此，该用户只有登录、退出权限。
   </div>
   {/empty}
   <!--  分组  -->
@@ -106,9 +106,8 @@
       </div>
     </div>
     <ul class="list-group">
-      <li class="list-group-item">！此页面只可查看，修改用户角色请到 <a href="{:url('auth_manager/index')}">角色管理</a></li>
-      <li class="list-group-item">！用与权限没有直接关系。 角色拥有权限，把用户添加到角色组中，用户即可获得角色权限。 用户可添加到多个角色中</li>
-      <li class="list-group-item">！用户拥有最终权限是用户所属多个角色的权限并集</li>
+      <li class="list-group-item">！用户可添加到多个角色中，用户拥有角色权限并集。</li>
+      <li class="list-group-item">！为角色分配权限请到 <a href="{:url('auth_manager/index')}">角色管理</a>。</li>
     </ul>
   </div>
   <!--  /分组  -->
