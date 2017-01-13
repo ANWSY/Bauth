@@ -161,6 +161,10 @@ class Administrator extends Base
             $this->error('您输入的新密码与确认密码不一致');
         }
 
+        if(! ((new AdminModel)->checkPassword($this->uid, $password)) ){
+            $this->error('原密码不正确');
+        }
+
         $res = (new AdminModel)->resetPassword($this->uid, $newPwd);
         if ($res) {
             return $this->success('修改密码成功！');

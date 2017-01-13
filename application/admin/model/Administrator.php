@@ -38,6 +38,19 @@ class Administrator extends Model{
         return true;
     }
 
+    public function checkPassword($uid,$password)
+    {
+        $passwd = $this->encryptPassword($password);
+        // echo '<pre>';
+        // print_r( Session::get('userInfo.password'));
+        // exit('</pre>');
+        if($passwd == Session::get('userInfo.password')){
+            return true;
+
+        }
+        return false;
+    }
+
     /**
      * 重置用户密码
      * @author baiyouwen 

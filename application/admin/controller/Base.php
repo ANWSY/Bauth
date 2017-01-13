@@ -40,6 +40,15 @@ class Base extends Controller {
 
         //后台系统用户行为记录
         \app\lib\BehaviorRecording::log($this->uid, $controller, $action);
+
+        // 特殊环境 限制部分操作
+        // 本地的代码或者正式环境可以去此处代码
+        if(\think\Env::get('scene') == 'demo'){
+            $access = 'PHP_'.'ACCESSDENIED_'.strtoupper($controller).'_'.strtoupper($action);
+            if(getenv($access)){
+                $this->error('本环境不容许此操作');
+            }
+        }
     }
 
     /**
