@@ -16,15 +16,18 @@ class Administrator extends Model{
     //用户登录
     public function login($username, $password)
     {
-        $ret = $this->where(['username'=>$username])->find()->toArray();
+        $ret = $this->where(['username'=>$username])->find();
         if(!$ret){
             $this->error('用户不存在');
+        }
+        if($ret['status'] != "1"){
+            $this->error('用户状态异常');
         }
         if($ret['password'] !== $this->encryptPassword($password)){
             $this->error('密码不正确');
         }
 
-        Session::set('userInfo', $ret);
+        Session::set('userInfo', $ret->toArray());
         return true;
     }
 
