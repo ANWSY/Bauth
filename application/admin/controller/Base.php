@@ -5,7 +5,7 @@ use app\lib\Bauth;
 use app\lib\Menu;
 use think\Controller;
 
-class Bash extends Controller {
+class Base extends Controller {
     public $uid = 0;
 
     public function _empty() {
@@ -171,5 +171,10 @@ class Bash extends Controller {
         }
         setcookie($pageTag, $pageNum, time()+86400);
         return $pageNum;
+    }
+
+    public function tsuccess()
+    {
+        return $this->fetch('base/success');
     }
 }

@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\UserBehaviorLog as Ulog;
 
-class Test extends Bash
+class Test extends Base
 {
     public function ruleAdd()
     {

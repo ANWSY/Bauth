@@ -3,7 +3,7 @@ namespace app\admin\controller;
 use app\admin\model\Menu as menuModel;
 use app\lib\TreeModel;
 
-class Menu extends Bash
+class Menu extends Base
 {
     /**
      * 菜单管理

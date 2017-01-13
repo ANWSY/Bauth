@@ -5,7 +5,7 @@ use app\admin\model\AdminBehaviorLog as Alog;
 /**
  * 用户行为
  */
-class behavior extends Bash
+class behavior extends Base
 {
     /**
      * 行为列表

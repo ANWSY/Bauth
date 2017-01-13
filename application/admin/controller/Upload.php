@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use think\File;
 
-class Upload extends Bash
+class Upload extends Base
 {
 
     public function index()

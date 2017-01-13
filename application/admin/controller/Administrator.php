@@ -4,7 +4,7 @@ namespace app\admin\controller;
 use app\admin\model\Administrator as AdminModel;
 use think\Validate;
 
-class Administrator extends Bash
+class Administrator extends Base
 {
     private $_rule = [
         'username' => 'require|length:4,25',

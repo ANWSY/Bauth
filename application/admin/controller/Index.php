@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\lib\Menu;
 
-class Index extends Bash
+class Index extends Base
 {
     public function index()
     {

@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\AuthGroup;
 
-class AuthManager extends Bash
+class AuthManager extends Base
 {
     /**
      * 权限首页

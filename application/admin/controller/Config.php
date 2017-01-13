@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Config as Cmodel;
 
-class Config extends Bash
+class Config extends Base
 {
     public function index()
     {
