@@ -59,7 +59,7 @@ class Administrator extends Base
     public function save()
     {
         $id = $this->request->param('id');
-        $data = $this->request->param(false);
+        $data = $this->request->param('');
         $valid = new Validate($this->_rule);
         if(!$valid->check($data)){
             $this->error($valid->getError());

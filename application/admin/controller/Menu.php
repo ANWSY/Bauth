@@ -91,10 +91,10 @@ class Menu extends Base
         $id = $this->request->param('id');
         if(empty($id)){
             $model = new menuModel();
-            $ret = $model->save($this->request->param(false));
+            $ret = $model->save($this->request->param(''));
         }else{
             $model = menuModel::get($id);
-            $ret = $model->save($this->request->param(false),['id'=>$id]);
+            $ret = $model->save($this->request->param(''),['id'=>$id]);
         }
         if(false !== $ret){
             return $this->success('操作成功', url('Menu/index', array('pid'=>$this->request->param('pid'), 'menu_module'=>$this->request->param('module'))));

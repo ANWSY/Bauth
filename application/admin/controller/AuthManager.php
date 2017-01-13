@@ -56,10 +56,10 @@ class AuthManager extends Base
             $model = new AuthGroup();
             $model->module = input('module', 'admin');
             $model->type = 1;
-            $ret = $model->save($this->request->param(false));
+            $ret = $model->save($this->request->param(''));
         }else{
             $model = AuthGroup::get($id);
-            $ret = $model->save($this->request->param(false), ['id'=>$id]);
+            $ret = $model->save($this->request->param(''), ['id'=>$id]);
         }
         if($ret !== false){
             return $this->success('更新成功', url('authManager/index'));

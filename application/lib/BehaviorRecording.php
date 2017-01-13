@@ -40,7 +40,7 @@ class BehaviorRecording
             $data['ip'] = $req->ip(1);
             $data['req_type'] = $req->method();
             $data['request'] = $req->url();
-            $param = $req->param(false);
+            $param = $req->param('');
             foreach ($secre as $value) {
                 if(isset($param[$value]))
                     $param[$value] = '**';
@@ -63,7 +63,7 @@ class BehaviorRecording
         $data['ip'] = $req->ip(1);
         $data['req_type'] = $req->method();
         $data['request'] = $req->url();
-        $param = $req->param(false);
+        $param = $req->param('');
         foreach ($secre as $value) {
             if(isset($param[$value]))
                 $param[$value] = '**';
