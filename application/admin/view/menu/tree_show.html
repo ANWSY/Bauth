@@ -74,7 +74,7 @@
         {empty name="vo1['_child']"}
         <span class="pull-right">
             <a href="{:url('edit?id='.$vo1['id'].'&menu_module='.$vo1['module'])}">编辑</a>
-            <a href="{:url('del?id='.$vo1['id'])}">删除</a>
+            <a class="ajaxGet confirm" href="{:url('del?id='.$vo1['id'])}">删除</a>
         </span>
         {/empty}
     </div>
@@ -99,7 +99,7 @@
             {empty name="vo2['_child']"}
             <span class="pull-right">
                 <a href="{:url('edit?id='.$vo2['id'].'&menu_module='.$vo2['module'])}">编辑</a>
-                <a href="{:url('del?id='.$vo2['id'])}">删除</a>
+                <a class="ajaxGet confirm" href="{:url('del?id='.$vo2['id'])}">删除</a>
             </span>
             {/empty}
         </div>
@@ -129,7 +129,7 @@
             <!-- /level3-title -->
             <span class="pull-right">
                 <a href="{:url('edit?id='.$vo3['id'].'&menu_module='.$vo3['module'])}">编辑</a>
-                <a href="{:url('del?id='.$vo3['id'])}">删除</a>
+                <a class="ajaxGet confirm" href="{:url('del?id='.$vo3['id'])}">删除</a>
             </span>
             </div>
             {/volist}
@@ -144,8 +144,11 @@
 {/volist}
 </div>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/static/artDialog-6.0.4/css/ui-dialog.css">
+<script src="/static/artDialog-6.0.4/dist/dialog-min.js"></script>
+<script src="/Admin/js/ajaxSubmit.js"></script>
+
 <script language="javascript">
  $(function(){
   //当鼠标滑入时将div的class换成divOver
