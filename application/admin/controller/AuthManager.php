@@ -277,7 +277,7 @@ class AuthManager extends Bash
         $groupids = input('groupids');
         $groupId = input('groupId/a');
 
-        $current = explode(',', $groupids);
+        $current = empty($groupids)? [] : explode(',', $groupids);
 
         $remove = array_diff($current, $groupId);
         $add = array_diff($groupId, $current);
