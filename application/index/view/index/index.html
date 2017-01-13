@@ -64,16 +64,44 @@
     .selection{
         color:#e74c3c;
     }
+
+    a{
+    text-decoration:none;
+    }
+    a:link{
+    text-decoration:none;
+    }
+    a:visited{
+    text-decoration:none;
+    }
+    a:hover{
+    text-decoration:none;
+    }
+    a:active{
+    text-decoration:none;
+    }
+    .go-btn{
+        top:50px;
+        right: 50px;
+        width: 90px;
+        height: 90px;
+        position: fixed;
+        background-color: #09711A;
+        color: #fff;
+        letter-spacing : 3px;
+        -moz-border-radius: 60px; 
+        -webkit-border-radius: 60px; 
+        text-align: center;
+        line-height:90px;
+    }
+    .go-btn a{
+        color: #fff;
+    }
 </style>
+    <div class="go-btn">
+        <a href="index.php?s=admin">管理后台</a>
+    </div>
     <div class="container" style="padding-top: 50px;">
-    <!-- <div class="jumbotron bg-info">
-      <h1>Hello, world!</h1>
-      <p>...</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-    </div> -->
-    <!-- <div class="well">
-        <h1>Hello world</h1>
-    </div> -->
     <h1 class="text-center Red strong" style="margin-bottom: 40px;">Bauth权限系统</h1>
     <div class="row">
     <div class="col-lg-6 text-right">
@@ -81,7 +109,28 @@
         <p class="Blue">多模块菜单、多模块权限，适用于多管理平台开发</p>
         <p class="Aqua">使用丰富的前端插件方便快速开发和预览</p>
         <p class="White">欢迎你加入开发！</p>
+        <div class="text-left">
+            <pre style="background-color: #000; border: 0;">
+            <code>
+            <span class="Yellow">
+            /**
+             * 菜单模块使用案例
+             * @author EchoEasy
+             * @DateTime 2017-01-13T22:24:30+0800
+             */</span>
+            <span class="Red">public</span> <span class="Blue">function</span> <span class="Green">menu_demo</span><span class="White">()</span>
+            <span class="White">{</span>
+                <span class="White">$module <span class="Red">=</span> <span class="Yellow">'admin'</span>;</span>
+                <span class="White">$menu</span> <span class="Red">= new</span> <span class="Blue">Menu</span><span class="White">(<span class="Periwinkle">true</span>);</span>
+                <span class="White">$list <span class="Red">=</span> $menu<span class="Red">-></span><span class="Blue">getMenu</span>($module);</span>
+                <span class="Orange-Red">$this</span><span class="Red">-></span><span class="Blue">assign</span><span class="White">(<span class="Yellow">'list'</span>, $list);</span>
+                <span class="Red">return</span> <span class="Orange-Red">$this</span><span class="Red">-></span><span class="Blue">fetch</span><span class="White">();</span>
+            <span class="White">}</span>
+            </code>
+            </pre>
+        </div>
     </div>
+
     <div class="col-lg-6 text-left">
     <p class="Periwinkle"><span class="Yellow">网址：</span><a href="http://bauth.exwechat.com/">http://bauth.exwechat.com/</a></p>
     <p class="Periwinkle"><span class="Yellow">GIT仓库地址：</span><a href="http://git.oschina.net/youwen21/Bauth">http://git.oschina.net/youwen21/Bauth</a></p>

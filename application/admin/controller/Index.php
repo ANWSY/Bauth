@@ -52,7 +52,11 @@ class Index extends Base
     {
         return $this->fetch();
     }
-    // 菜单模块使用案例
+    /**
+     * 菜单模块使用案例
+     * @author EchoEasy
+     * @DateTime 2017-01-13T22:24:30+0800
+     */
     public function menu_demo()
     {
         $module = 'admin';
