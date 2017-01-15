@@ -23,6 +23,7 @@ class Base extends Controller {
         $module = $this->request->module();
         $controller = $this->request->controller();
         $action = $this->request->action();
+
         $auth = new Bauth($this->uid, $module);
         if (!$auth->check($controller, $action)) {
             $this->error('权限不足');
@@ -44,9 +45,9 @@ class Base extends Controller {
         // 特殊环境 限制部分操作
         // 本地的代码或者正式环境可以去此处代码
         if(\think\Env::get('scene') == 'demo'){
-            $access = 'PHP_'.'ACCESSDENIED_'.strtoupper($controller).'_'.strtoupper($action);
+            $access = 'PHP_'.'ACCESSDENIED_'.strtoupper($controller.'_'.$action);
             if(getenv($access)){
-                $this->error('本环境不容许此操作');
+                $this->error('本环境不允许此操作');
             }
         }
     }

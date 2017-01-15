@@ -120,7 +120,8 @@ class Bauth{
                 case '3':
                     $allowArr[$m][$c][$a]['type'] = $value['type'];
                     $allowArr[$m][$c][$a]['param'] = [];
-                    parse_str($value['url'], $allowArr[$m][$c][$a]['param']);
+                    if(!empty($value['url']))
+                        parse_str($value['url'], $allowArr[$m][$c][$a]['param']);
                     break;
                 default:
                     $allowArr[$m][$c][$a] = '';
@@ -181,7 +182,9 @@ class Bauth{
                         return false;
                     }
                     // 正则验证参数
-                        
+                    if (!preg_match($value, $params[$key])){
+                        return false;
+                    }
                 }
             }
         }

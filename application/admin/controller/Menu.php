@@ -103,16 +103,23 @@ class Menu extends Base
         }
     }
 
+    // 菜单隐藏设置
     public function toogleHide($id, $value)
     {
         return $this->editRows('Menu', ['id'=>array('in', $id)], ['hide'=>$value], ['url'=> url('index')]);
     }
 
+    // 开发者菜单设置
     public function toogledev($id, $value)
     {
         return $this->editRows('Menu', ['id'=>array('in', $id)], ['is_dev'=>$value], ['url'=> url('index')]);
     }
 
+    /**
+     * 以树式显示某分组所有菜单 包括隐藏菜单和开发者菜单
+     * @author EchoEasy
+     * @DateTime 2017-01-15T13:03:21+0800
+     */
     public function tree_show()
     {
         // $startId = $this->request->param('startId', 0);
@@ -127,6 +134,12 @@ class Menu extends Base
         $this->assign("_menuTree", $menuTree);
         return $this->fetch();
     }
+
+    /**
+     * 生成某一ID为PID的菜单树
+     * @author EchoEasy
+     * @DateTime 2017-01-15T13:06:34+0800
+     */
     private function _substr_tree($tree=[], $startId=0, $maxLevel=100)
     {
         if($maxLevel == 0){
