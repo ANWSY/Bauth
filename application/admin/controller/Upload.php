@@ -5,12 +5,20 @@ use think\File;
 
 class Upload extends Base
 {
+    private $_rule=[
+        // 'size' => '',
+        // 'type' => '',
+        // 'ext' => '',
+    ];
 
     public function index()
     {
         $fileArr = $this->request->file();
         $savePath = './Uploads/Admin/';
         foreach ($fileArr as $key => $fileObj) {
+            if(!$fileObj->check($this->_rule)){
+                $this->error($fileObj->getError());
+            }
             $ret = $fileObj->move($savePath);
             if(false == $ret){
                 $error = $fileObj->getError();
