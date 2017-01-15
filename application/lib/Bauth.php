@@ -29,13 +29,20 @@ class Bauth{
         $this->_allowList=array_merge_recursive_distinct($this->_allowList, $pub);
     }
 
+    /**
+     * 用户都看到并且访问的菜单项
+     * @author EchoEasy
+     */
     private function _publicIds()
     {
         $public = ['1', '189'];
         return implode(',', $public);
     }
 
-
+    /**
+     * 用记都可访问的权限  可以不显示在菜单
+     * @author EchoEasy
+     */
     private function _publicAllow()
     {
         $con = [
@@ -65,11 +72,8 @@ class Bauth{
     }
 
     /**
-     * 获取所有允许的ID
-     * @param    [type]                   $uid [description]
-     * @return   [type]                        [description]
+     * 获取用户所属角色组可访问的菜单ID
      * @author EchoEasy
-     * @DateTime 2016-12-24T12:10:50+0800
      */
     private function _loadAllowIdsByUid($uid)
     {
@@ -81,7 +85,7 @@ class Bauth{
         }
         return $rules;
     }
-
+    // 允许访问的菜单ID并集
     private function _getAllRules($ret)
     {
         $rules = '';
@@ -111,9 +115,16 @@ class Bauth{
             $m = strtolower($value['module']);
             $c = strtolower($value['controller']);
             $a = strtolower($value['action']);
-            if($value['type'] == 1){
-                $allowArr[$m][$c][$a] = $value['url'];
-                // $allowArr[$m][$c][$a] = $value['id'].'_'.$value['url'];
+            switch ($value['type']) {
+                case '1':
+                case '3':
+                    $allowArr[$m][$c][$a]['type'] = $value['type'];
+                    $allowArr[$m][$c][$a]['param'] = [];
+                    parse_str($value['url'], $allowArr[$m][$c][$a]['param']);
+                    break;
+                default:
+                    $allowArr[$m][$c][$a] = '';
+                    break;
             }
         }
         return $allowArr;
@@ -153,14 +164,24 @@ class Bauth{
             return false;
         }
         // 检查参数
-        $actionAuth = $this->_allowList[$this->_module][$controller][$action];
+        $actionAuth = trim($this->_allowList[$this->_module][$controller][$action]);
         if(!empty($actionAuth)){
-            foreach ($actionAuth as $key => $value) {
-                if(empty($params[$key])){ // 缺少必须的参数
-                    return false;
+            if($actionAuth['type'] == "1"){
+                foreach ($actionAuth['param'] as $key => $value) {
+                    if(empty($params[$key])){ // 缺少必须的参数
+                        return false;
+                    }
+                    if(!empty($value)){ // 必须的参数不合格
+                        if($value != $params[$key]) return false;
+                    }
                 }
-                if(!empty($value)){ // 必须的参数不合格
-                    if($value != $params[$key]) return false;
+            }else if($actionAuth['type'] == "3"){
+                foreach ($actionAuth['param'] as $key => $value) {
+                    if(empty($params[$key])){ // 缺少必须的参数
+                        return false;
+                    }
+                    // 正则验证参数
+                        
                 }
             }
         }

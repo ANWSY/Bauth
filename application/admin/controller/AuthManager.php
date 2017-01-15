@@ -237,7 +237,7 @@ class AuthManager extends Base
         $uid = $this->inputOrError('uid');
         $group_id = $this->inputOrError('group_id');
         if(is_admin($uid)){
-            $this->error('此用户是超级管理员', '');
+            $this->error('此用户是超级管理员');
         }
         // if(!is_member($uid)){
         //     $this->error('无此用户', '');
@@ -246,7 +246,7 @@ class AuthManager extends Base
         //     $this->error('无此用户组', '');
         // }
         if(db('auth_group_access')->where(['uid'=>$uid, 'group_id'=>$group_id])->find()){
-            $this->error('已存在此授权', '');
+            $this->error('已存在此授权');
         }
         $ret = db('auth_group_access')->insert(['uid'=>$uid, 'group_id'=>$group_id]);
         if(false !== $ret){

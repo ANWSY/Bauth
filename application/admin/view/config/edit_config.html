@@ -22,7 +22,7 @@
 	</div>
     <div class="container">
     <form action="{:url('edit_config')}" enctype="application/x-www-form-urlencoded" method="POST"
-            class="form-horizontal">
+            class="form-horizontal ajaxForm">
 
 
         <div class="form-group">
@@ -85,7 +85,7 @@
 
         <div class="form-group">
             <input type="hidden" name="id" value="{$info.id|default=''}">
-            <button type="submit" class="btn btn-success ajax-post" target-form="form-horizontal">确 定</button>
+            <button type="submit" class="btn btn-success" target-form="form-horizontal">确 定</button>
             <button class="btn btn-warning" onclick="javascript:history.back(-1);return false;">返 回</button>
         </div>
     </form>

@@ -40,11 +40,11 @@
 
 	<div class="container">
 		<div class="pull-right">
-			<form class="add-user form-inline" action="{:URL('addToGroup')}" method="post" enctype="application/x-www-form-urlencoded" >
+			<form class="ajaxForm form-inline" action="{:URL('addToGroup')}" method="post" enctype="application/x-www-form-urlencoded" >
 				<div class="form-group">
 				<input type="hidden" name="group_id" value="{:input('group_id')}">
 				<input class="form-control" type="text" name="uid" placeholder="请输入uid,多个用英文逗号分隔">
-                <button type="submit" class="btn btn-success btn-sm ajax-post" target-form="add-user">新 增</button>
+                <button type="submit" class="btn btn-success btn-sm" target-form="add-user">新 增</button>
             </div>
 			</form>
 		</div>

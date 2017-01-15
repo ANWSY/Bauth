@@ -8,7 +8,7 @@ class Administrator extends Base
 {
     private $_rule = [
         'username' => 'require|length:4,25',
-        'password' => 'require|length:4,32',
+        'password' => 'length:4,32',
         'mobile' => 'require|length:11',
     ];
 
