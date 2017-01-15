@@ -90,7 +90,7 @@ class Base extends Controller {
      * 状态编辑  启用  禁用  删除
      * @author baiyouwen
      */
-    protected function changeStatus() {
+    public function changeStatus() {
         $id = $this->request->param('ids', 0);
         $ids = $this->request->param('ids/a', $id);
         if (is_array($ids)) {
