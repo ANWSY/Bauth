@@ -60,7 +60,7 @@ class Base extends Controller {
      * @param  $msgReplace 返回的消息
      * @author baiyouwen
      */
-    public function editRows($model, $where, $data, $msgReplace = []) {
+    protected function editRows($model, $where, $data, $msgReplace = []) {
         $msg = array_merge(['success' => '操作成功！', 'error' => '操作失败！', 'url' => '', 'ajax' => $this->request->isAjax()], $msgReplace);
         if (false !== db($model)->where($where)->update($data)) {
             return $this->success($msg['success'], $msg['url']);
@@ -75,7 +75,7 @@ class Base extends Controller {
      * @param  $type 获取参数的类型
      * @author baiyouwen
      */
-    public function inputOrError($name, $msg = null, $type = 'param') {
+    protected function inputOrError($name, $msg = null, $type = 'param') {
         $ret = $this->request->$type($name, null);
         if (is_null($msg)) {
             $msg = 'Missing parameter :' . $name;
@@ -90,7 +90,7 @@ class Base extends Controller {
      * 状态编辑  启用  禁用  删除
      * @author baiyouwen
      */
-    public function changeStatus() {
+    protected function changeStatus() {
         $id = $this->request->param('ids', 0);
         $ids = $this->request->param('ids/a', $id);
         if (is_array($ids)) {

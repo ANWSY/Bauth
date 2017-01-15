@@ -40,7 +40,7 @@ class Bauth{
     }
 
     /**
-     * 用记都可访问的权限  可以不显示在菜单
+     * 用户都可访问的权限  可以不显示在菜单
      * @author EchoEasy
      */
     private function _publicAllow()
@@ -90,8 +90,8 @@ class Bauth{
     {
         $rules = '';
         foreach($ret as $value){
-                $rules .= $value['rules'].',';
-            }
+            $rules .= $value['rules'].',';
+        }
         $rules = rtrim($rules, ',');
         $tempArr = array_unique(explode(',', $rules));
         $rules = implode(',', $tempArr);
@@ -144,7 +144,7 @@ class Bauth{
 
 
     /**
-     * 全限检查
+     * 权限检查
      * @param    [type]                   $controller [description]
      * @param    [type]                   $action     [description]
      * @param    array                    $params     [description]
@@ -201,10 +201,4 @@ class Bauth{
     {
 
     }
-
-
-
-    // 
-
-
 }
