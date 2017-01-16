@@ -5,6 +5,18 @@ use app\admin\model\UserBehaviorLog as Ulog;
 
 class Test extends Base
 {
+
+    public function iplocation($ip='')
+    {
+        if($ip==''){
+            $ip = '180.91.179.145';
+        }
+        $location = new \app\lib\IpLocation();
+        $info = $location->getlocation($ip);
+        echo '<pre>';
+        print_r( $info );
+        exit('</pre>');
+    }
     public function ruleAdd()
     {
         if($this->request->isPost()){
