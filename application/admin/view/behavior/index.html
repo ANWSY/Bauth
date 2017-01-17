@@ -43,9 +43,7 @@
         <tr>
         <td><a href="{:url('detail', ['id'=>$vo['id']])}">{$vo.id}</a></td>
           <td><a href="{:url('index', ['user_id'=>$vo['user_id']])}">{$vo.user_id}</a></td>
-          <td class="clientIp" onmouseover="onSecondDelay(this);" 
-      onmousemove="onSecondDelay(this);"
-      onmouseout ="out(this);"><a href="{:url('index', ['ip'=>$vo['ip']])}">{$vo.ip|long2ip}</a></td>
+          <td class="clientIp" id="{$vo['id']}"><a href="{:url('index', ['ip'=>$vo['ip']])}">{$vo.ip|long2ip}</a></td>
           <td>{$vo.req_type}</td>
           <td>{$vo.request|substr=###,0,40}</td>
           <td>{$vo.param|substr=###,0,40}</td>
@@ -70,36 +68,52 @@
     <link rel="stylesheet" href="/static/artDialog-6.0.4/css/ui-dialog.css">
     <script src="/static/artDialog-6.0.4/dist/dialog-min.js"></script>
     <script>
-    var timer = null;
-    var that='';
-    var ip = '';
-    var d = '';
-    function callback() {
+    $(function(){
+      $(".clientIp").bind('click', function(){
+        var ip = $(this).find("a").text();
+        var id = $(this).attr('id');
+        d = dialog({
+            content: '',
+            quickClose: true// 点击空白处快速关闭
+        });
+        d.show(document.getElementById(id)); //
         $.post('{:url('Others/iplocation')}', {ip:ip},function(data){
           if(data.code){
-            d = dialog({
-                content: data.msg,
-                quickClose: true// 点击空白处快速关闭
-            });
-            d.show($(that));
+            d.content(data.msg);
           }
         })
-    }
-    function onSecondDelay(that) {
-      that = that;
-      ip = $(that).find("a").text();
-        clearTimeout(timer);
-        timer = setTimeout(callback, 1000);
-    }
+      })
+    })
+    // var timer = null;
+    // var that='';
+    // var ip = '';
+    // var d = '';
+    // function callback() {
+    //     $.post('{:url('Others/iplocation')}', {ip:ip},function(data){
+    //       if(data.code){
+    //         d = dialog({
+    //             content: data.msg,
+    //             quickClose: true// 点击空白处快速关闭
+    //         });
+    //         d.show($(that));
+    //       }
+    //     })
+    // }
+    // function onSecondDelay(that) {
+    //   that = that;
+    //   ip = $(that).find("a").text();
+    //     clearTimeout(timer);
+    //     timer = setTimeout(callback, 1000);
+    // }
 
-    function out(that)
-    {
-      clearTimeout(timer);
-      if(d!=''){
-        d.close().remove();
-        d='';
-      }
-    }
+    // function out(that)
+    // {
+    //   clearTimeout(timer);
+    //   if(d!=''){
+    //     d.close().remove();
+    //     d='';
+    //   }
+    // }
     // $(".dropdown-toggle").on("mouseover", function() {
     //   if ($(this).parent().is(".open")) {
     //       return
