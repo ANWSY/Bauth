@@ -12,14 +12,30 @@ class Administrator extends Base
         'mobile' => 'require|length:11',
     ];
 
+    private $defaultSide = 17;
+
     public function index()
     {
-        $this->assign('defaultSide', 17);
+        $sideId = $this->getSideId();
+        $showId = $sideId ? $sideId: $this->defaultSide;
+        trace('showId:'.$showId);
+        $this->assign('defaultSide', $showId);
         return $this->fetch('base/index');
+    }
+
+    public function setSideId()
+    {
+        # code...
+    }
+
+    public function getSideId()
+    {
+        # code...
     }
 
     public function userlist()
     {
+        // setcookie('xxxx', 'xxxxxxxxxxxx', time()+86400);
         $this->lists('administrator', ['status' => array('egt', 0)], 'id desc');
         // $list = db('administrator')->where(['status'=>array('egt', 0)])->paginate(10);
         // \app\lib\intParse::int_to_string($list);
