@@ -6,9 +6,9 @@ use think\File;
 class Upload extends Base
 {
     private $_rule=[
-        // 'size' => '',
-        // 'type' => '',
-        // 'ext' => '',
+        'size' => 4000000,
+        'type' => 'image/gif,image/jpeg,image/bmp',
+        'ext' => 'gif,jpg,jpeg,bmp,png,swf',
     ];
 
     public function index()
@@ -25,6 +25,7 @@ class Upload extends Base
                 return response(['code'=>600, 'errorFile'=>$error], 600, [], 'json');
             }else{
                 $fileName = $savePath.$ret->getSaveName();
+                $fileName = ltrim($fileName, '.');
                 return response(['code'=>200, 'successFile'=>$fileName], 200, [], 'json');
             }
             break;

@@ -47,6 +47,11 @@ class Index extends Base
     {
         return $this->fetch();
     }
+    // Web Uploader
+    public function web_uploader_demo()
+    {
+        return $this->fetch();
+    }
     // 综合案例
     public function multiple_demo()
     {
