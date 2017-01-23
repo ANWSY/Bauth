@@ -52,6 +52,12 @@ class Index extends Base
     {
         return $this->fetch();
     }
+    // base64图片上传
+    public function base64_demo()
+    {
+        return $this->fetch();
+    }
+
     // 综合案例
     public function multiple_demo()
     {

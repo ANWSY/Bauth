@@ -53,4 +53,71 @@ class Upload extends Base
         }
     }
 
+    // 上传图片 base64图片
+    public function upload_base64()
+    {
+        $typeAllow = ['image/gif','image/jpeg','image/bmp'];
+
+        // 获取APP客户端传来的base64图片内容
+        $image = $this->request->post('image');
+        // 对HTML5图片上传的支持  HTML5会给base64图片加前缀
+        if(false !== strpos($image, 'data:')){
+            $img = substr($image, strpos($image, ',')+1);
+            $img = base64_decode($img);
+        }
+        try{
+            $info = getimagesizefromstring($img);
+            if(false == $info){
+                throw new \Exception('bad image');
+            }
+            if(!in_array($info['mime'], $typeAllow)){
+                throw new \Exception('Type not allowed');
+            }
+            $file = $this->_createFileName();
+            $ret = file_put_contents($file, $img);
+            if(!$ret)
+                throw new \Exception('Write failed');
+        }catch (\Exception $e){
+            switch ($e->getMessage()) {
+                case 'getimagesizefromstring(): Read error!':
+                    $this->error( '不是有效的图片文件');
+                    break;
+                case 'bad image':
+                    $this->error( '图片处理失败');
+                    break;
+                case 'Type not allowed':
+                    $this->error( '不是允许的图片类型');
+                    break;
+                case 'Too big':
+                    $this->error( '图片大小不合格');
+                    break;
+                case 'Write failed':
+                    $this->error( '写入图片失败，可能是权限问题，请检查');
+                    break;
+                default:
+                    $this->error( '上传错误');
+                    break;
+            }
+        }
+        // return ['code'=>0, 'successFile'=>ltrim($file, '.')];
+        return $this->success($this->request->domain().ltrim($file, '.'), '');
+    }
+
+    private function _createFileName($ext = '.jpg', $savePath = './Uploads/')
+    {
+        $path = $savePath. date('Ymd');
+        $this->_makePath($path);
+        $name = $this->uid.'_'.uniqid();
+        return $path.'/'.$name.$ext;
+    }
+    private function _makePath($path)
+    {
+        if(!is_dir($path)){
+            if(!mkdir($path)){
+                failReturn('9999', '创建目录失败');
+            }
+        }
+        return true;
+    }
+
 }
