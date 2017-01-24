@@ -64,6 +64,8 @@ class Upload extends Base
         if(false !== strpos($image, 'data:')){
             $img = substr($image, strpos($image, ',')+1);
             $img = base64_decode($img);
+        }else{
+            $img = base64_decode($image);
         }
         try{
             $info = getimagesizefromstring($img);
