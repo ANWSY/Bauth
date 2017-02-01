@@ -33,6 +33,10 @@ class Base extends Controller {
         $reqId = $menu->getId($module, $controller, $action);
         $reqRootId = $menu->getRootId($reqId);
         $topMenu = $menu->getTopMenu('admin');
+        $topIds = array_column($topMenu, 'id');
+        if(!in_array($reqRootId, $topIds)){
+            $reqRootId = $topIds[0];
+        }
         $sideTree = $menu->getSideTree($reqRootId);
 
         $this->assign('_reqRootId', $reqRootId);

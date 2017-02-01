@@ -39,3 +39,13 @@ function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 
     }
     return $tree;
 }
+if(!function_exists('array_column')) {
+    function array_column(&$array, $key)
+    {
+        $keyArr = [];
+        foreach ($array as $value) {
+            $keyArr[] = $value[$key];
+        }
+        return $keyArr;
+    }
+}
