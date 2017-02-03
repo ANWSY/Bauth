@@ -1,11 +1,7 @@
 {
-    "name": "bauth",
+    "name": "youwen/bauth",
     "description": "bauth auth system build on the new thinkphp framework",
     "type": "project",
-    "keywords": [
-        "bauth",
-        "thinkphp5"
-    ],
     "homepage": "http://bauth.exwechat.com/",
     "license": "Apache-2.0",
     "authors": [
