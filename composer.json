@@ -10,6 +10,8 @@
             "email": "youwen21@yeah.net"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
+        "topthink/think-testing": "^1.0"
     }
 }
