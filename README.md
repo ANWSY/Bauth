@@ -22,6 +22,10 @@ Bauth权限系统的目标是做一个权限完善且多模块的后台管理系
 一般权限有户 ： demo       123456     
 
 
+> 使用Composer 安装Bauth权限系统：
+要安装网站的目录下运行：composer create-project youwen/bauth
+
+
 > Bauth权限系统开发文档：
 Bauth权限系统开发文档 [参考文档](http://doc.bauth.exwechat.com )
 
