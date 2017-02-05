@@ -24,6 +24,7 @@ Bauth权限系统的目标是做一个权限完善且多模块的后台管理系
 
 > 使用Composer 安装Bauth权限系统：
 要安装网站的目录下运行：composer create-project youwen/bauth
+如果未安装composer可以加入bauth开发交流QQ群：241950434，下载完整网站代码包
 
 
 > Bauth权限系统开发文档：
