@@ -18,17 +18,20 @@ class Administrator extends Model{
     {
         $ret = $this->where(['username'=>$username])->find();
         if(!$ret){
-            $this->error('用户不存在');
+            // $this->error('用户不存在');
+            return ['code'=>0, 'msg'=>'用户不存在'];
         }
         if($ret['status'] != "1"){
-            $this->error('用户状态异常');
+            // $this->error('用户状态异常');
+            return ['code'=>0, 'msg'=>'用户状态异常'];
         }
         if($ret['password'] !== $this->encryptPassword($password)){
-            $this->error('密码不正确');
+            // $this->error('密码不正确');
+            return ['code'=>0, 'msg'=>'密码不正确'];
         }
 
         Session::set('userInfo', $ret->toArray());
-        return true;
+        return ['code'=>1, 'msg'=>''];
     }
 
     //用户退出

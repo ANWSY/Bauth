@@ -33,7 +33,7 @@ class AdminPublic extends Controller {
             $password = $this->request->param('password');
             // $model = new adminModel();
             $info = (new adminModel())->login($username, $password);
-            if ($info) {
+            if ($info['code']) {
                 $uid =  Session::get('userInfo.id');
                 if(!$uid){
                     $this->error('登录错误');
@@ -43,7 +43,7 @@ class AdminPublic extends Controller {
 
                 return $this->success('登录成功', url('Index/index'));
             } else {
-                $this->error('用户名或者密码不正确');
+                $this->error($info['msg']);
             }
 
         }
