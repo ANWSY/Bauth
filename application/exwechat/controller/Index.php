@@ -89,7 +89,7 @@ class index
             case 'location':break;
             // 自定义菜单事件
             case 'CLICK':
-                $this->_response('你点击了菜单');
+                $this->_response('你点击了菜单'.$this->_data['EventKey']);
                 break;
             // 模板消息发送成功通知
             case 'TEMPLATESENDJOBFINISH':break;
