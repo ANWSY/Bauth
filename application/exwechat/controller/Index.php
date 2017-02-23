@@ -144,7 +144,7 @@ class index
     {
         switch (gettype($argument)) {
             case 'string':
-                $this->_handleKeyword();
+                $this->_handleKeyword($argument);
                 break;
             case 'array':
                 
@@ -152,17 +152,18 @@ class index
             case 'object':
             case 'resource':
             default:
-                return $argument;
+                return false;
                 break;
         }
+        return true;
     }
     // 关键词处理
     private function _handleKeyword($keyWord='')
     {
         // 优先关键词
-        $this->_priorityKeyword($keyWord);
+        $ret1 = $this->_priorityKeyword($keyWord);
         // 数据库关键词
-        $this->_dbKeyword($keyWord);
+        $ret = $this->_dbKeyword($keyWord);
         // 默认消息
         $this->_defaultReply();
     }
@@ -171,8 +172,11 @@ class index
         switch ($keyWord) {
             //部分自定义优先关键字
             case 'subscribe':$this->_response('subscribe');
-            case 'openid':$this->_response($this->data['FromUserName']);
                 break;
+            case 'openid':$this->_response($this->_data['FromUserName']);
+                break;
+            default:
+                return false;
         }
         return true;
     }
@@ -201,8 +205,9 @@ class index
                 echo $msg;
                 break;
             default:
-                # code...
+                return false;
                 break;
         }
+        return true;
     }
 }
