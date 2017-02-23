@@ -29,7 +29,7 @@ class index
         exLog::log($_POST, 'post');
         $exwechat = new exWechat();
         //如果是绑定，那只输出绑定结果
-        if ($_GET["echostr"]) {
+        if (isset($_GET["echostr"])) {
             $redata = $exwechat->authentication();
             exit($redata);
         }
