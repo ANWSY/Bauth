@@ -4,7 +4,7 @@ namespace app\exwechat\controller;
 
 use think\Request;
 use youwen\exwechat\exWechat;
-
+use youwen\exwechat\exLog;
 
 /**
  * 微信交互控制器
@@ -25,10 +25,8 @@ class index
      */
     public function index()
     {
-        // echo '<pre>';
-        // print_r( ROOT_PATH.'/vendor/autoload.php' );
-        // exit('</pre>');
-        // include ROOT_PATH.'/vendor/autoload.php';
+        exLog::log($_GET, 'get');
+        exLog::log($_POST, 'post');
         $exwechat = new exWechat();
         //如果是绑定，那只输出绑定结果
         if ($_GET["echostr"]) {
