@@ -21,23 +21,27 @@ class index
         exit('</pre>');
     }
     /**
-     * 显示资源列表
-     *
-     * @return \think\Response
+     * 微信消息入口
      */
     public function index()
     {
         exLog::log($_GET, 'get');
         $exwechat = new exWechat();
-        //如果是绑定，那只输出绑定结果
+        // 接口配置
         if (isset($_GET["echostr"])) {
             $redata = $exwechat->authentication();
             exit($redata);
         }
+        // 获取微信发来的信息
         $this->_data = $exwechat->initMsg();
+        // 微信消息分类处理
         $this->_requestHandle();
     }
 
+    /**
+     * 微信消息分类处理
+     * @author baiyouwen
+     */
     public function _requestHandle()
     {
         switch ($this->_data['MsgType']) {
@@ -84,7 +88,9 @@ class index
             // 上报地理位置事件
             case 'location':break;
             // 自定义菜单事件
-            case 'CLICK':break;
+            case 'CLICK':
+
+                break;
             // 模板消息发送成功通知
             case 'TEMPLATESENDJOBFINISH':break;
             // 菜单跳转链接
@@ -102,7 +108,7 @@ class index
             // 弹出地理位置选择器的事件推送
             case 'location_select':break;
             default:
-                $this->response_text('这个类型事件还没开发呢！event ');
+                $this->_response('这个类型事件还没开发呢！event ', 'text');
         }
     }
 
@@ -132,6 +138,7 @@ class index
     {
 
     }
+
 
     private function _responseHandle($argument='')
     {
@@ -163,7 +170,8 @@ class index
     {
         switch ($keyWord) {
             //部分自定义优先关键字
-            case 'subscribe':$this->response_text('subscribe');
+            case 'subscribe':$this->_response('subscribe');
+            case 'openid':$this->_response($this->data['FromUserName']);
                 break;
         }
         return true;
@@ -174,9 +182,27 @@ class index
     }
     private function _defaultReply($type='')
     {
-        $msg = (new exResponse())->createText($this->_data, 'haha');
-        echo '<pre>';
-        print_r( $msg );
-        exit('</pre>');
+        $msg = (new exResponse())->createText($this->_data, $this->_data['Content']);
+        echo $msg;
+    }
+
+    /** 
+     * 微信消息回复_快捷通道
+     * @param  [type] $msg  [description]
+     * @param  string $type [description]
+     * @return [type]       [description]
+     * @author baiyouwen
+     */
+    private function _response($msg, $type='text')
+    {
+        switch ($type) {
+            case 'text':
+                $msg = (new exResponse())->createText($this->_data, $msg);
+                echo $msg;
+                break;
+            default:
+                # code...
+                break;
+        }
     }
 }
