@@ -3,6 +3,7 @@ namespace app\exwechat\controller;
 
 use youwen\exwechat\exLog;
 use youwen\exwechat\exWechat;
+use youwen\exwechat\exResponse;
 
 /**
  * 微信交互控制器
@@ -108,7 +109,7 @@ class index
     private function _text()
     {
         // D('Wtext')->save_msg($this->token, $this->_data);
-        $this->_response();
+        $this->_responseHandle($this->_data['Content']);
     }
 
     private function _image()
@@ -148,12 +149,34 @@ class index
                 break;
         }
     }
+    // 关键词处理
     private function _handleKeyword($keyWord='')
     {
+        // 优先关键词
         $this->_priorityKeyword($keyWord);
+        // 数据库关键词
+        $this->_dbKeyword($keyWord);
+        // 默认消息
+        $this->_defaultReply();
     }
     private function _priorityKeyword($keyWord='')
     {
-
+        switch ($keyWord) {
+            //部分自定义优先关键字
+            case 'subscribe':$this->response_text('subscribe');
+                break;
+        }
+        return true;
+    }
+    private function _dbKeyword()
+    {
+        return true;
+    }
+    private function _defaultReply($type='')
+    {
+        $msg = (new exResponse())->createText($this->_data, 'haha');
+        echo '<pre>';
+        print_r( $msg );
+        exit('</pre>');
     }
 }
