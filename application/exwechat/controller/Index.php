@@ -67,7 +67,7 @@ class index
             case 'location':$this->_location();
                 break;
             default:
-                $this->_response_text('这个类型微信消息还没开发呢！other');
+                $this->_response('这个类型微信消息还没开发呢！other');
         }
     }
 
@@ -89,7 +89,7 @@ class index
             case 'location':break;
             // 自定义菜单事件
             case 'CLICK':
-
+                $this->_response('你点击了菜单');
                 break;
             // 模板消息发送成功通知
             case 'TEMPLATESENDJOBFINISH':break;
