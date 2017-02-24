@@ -3,6 +3,7 @@ namespace app\exwechat\controller;
 
 use youwen\exwechat\exLog;
 use youwen\exwechat\exWechat;
+use youwen\exwechat\exRequest;
 use youwen\exwechat\exResponse;
 
 /**
@@ -11,7 +12,7 @@ use youwen\exwechat\exResponse;
  */
 class index
 {
-
+    private $exRequest;
     private $_data = [];
 
     public function test()
@@ -26,119 +27,60 @@ class index
     public function index()
     {
         exLog::log($_GET, 'get');
+        // 微信消息单例
+        $this->exRequest = exRequest::instance();
+        exLog::log($this->exRequest->getOriginalMsg(), 'post');
+        // 微信消息控制器
         $exwechat = new exWechat();
-        // 接口配置
+        // 接口配置 － 验证
         if (isset($_GET["echostr"])) {
             $redata = $exwechat->authentication();
             exit($redata);
         }
-        // 获取微信发来的信息
-        $this->_data = $exwechat->initMsg();
+        // 获取用户发来的消息 － 数组格式
+        $this->_data = $this->exRequest->getMsg();
         // 微信消息分类处理
-        $this->_requestHandle();
+        $this->_msgTypeHandle();
     }
 
     /**
      * 微信消息分类处理
+     * 以后由分类事件控制器接管
      * @author baiyouwen
      */
-    public function _requestHandle()
+    public function _msgTypeHandle()
     {
         switch ($this->_data['MsgType']) {
             // 点击菜单与关注
-            case 'event':$this->_event();
+            case 'event':
+                $cls = new HandleEvent($this->_data);
+                $ret = $cls->handle();
                 break;
             // 文本消息
-            case 'text':$this->_text();
+            case 'text':
+                $cls = new HandleText($this->_data);
+                $ret = $cls->handle();
+                // $this->_text();
                 break;
             // 图片消息
-            case 'image':$this->_image();
+            case 'image':
                 break;
             // 音频消息
-            case 'voice':$this->_voice();
+            case 'voice':
                 break;
             // 视频消息
-            case 'video':$this->_video();
+            case 'video':
                 break;
             // 链接
-            case 'link':$this->_link();
+            case 'link':
                 break;
             // 地理位置
-            case 'location':$this->_location();
+            case 'location':
                 break;
             default:
                 $this->_response('这个类型微信消息还没开发呢！other');
         }
     }
-
-    private function _event()
-    {
-        switch ($this->_data['Event']) {
-            // 关注公众号
-            case 'subscribe':
-                // D('Wevent')->subscribe($this->token, $this->_data);
-                $this->_responseHandle('subscribe');
-                break;
-            // 取消关注公众号
-            case 'unsubscribe':
-                D('Wevent')->unsubscribe($this->token, $this->_data);
-                break;
-            // 扫描带参数二维码事件
-            case 'scan':break;
-            // 上报地理位置事件
-            case 'location':break;
-            // 自定义菜单事件
-            case 'CLICK':
-                $this->_response('你点击了菜单'.$this->_data['EventKey']);
-                break;
-            // 模板消息发送成功通知
-            case 'TEMPLATESENDJOBFINISH':break;
-            // 菜单跳转链接
-            case 'VIEW':break;
-            // 扫码推事件的事件推送
-            case 'scancode_push':break;
-            // 扫码推事件且弹出“消息接收中”提示框的事件推送
-            case 'scancode_waitmsg':break;
-            // 弹出系统拍照发图的事件推送
-            case 'pic_sysphoto':break;
-            // 弹出拍照或者相册发图的事件推送
-            case 'pic_photo_or_album':break;
-            // 弹出微信相册发图器的事件推送
-            case 'pic_weixin':break;
-            // 弹出地理位置选择器的事件推送
-            case 'location_select':break;
-            default:
-                $this->_response('这个类型事件还没开发呢！event ', 'text');
-        }
-    }
-
-    private function _text()
-    {
-        // D('Wtext')->save_msg($this->token, $this->_data);
-        $this->_responseHandle($this->_data['Content']);
-    }
-
-    private function _image()
-    {
-
-    }
-    private function _voice()
-    {
-
-    }
-    private function _video()
-    {
-
-    }
-    private function _link()
-    {
-
-    }
-    private function _location()
-    {
-
-    }
-
 
     private function _responseHandle($argument='')
     {
