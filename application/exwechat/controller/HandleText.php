@@ -14,7 +14,11 @@ class HandleText extends AbstractHandle
     public function handle($arrayMsg='')
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
-        
+        //获取用户情景 － 聊天上下文
+        $scene = $this->sceneContext();
+        if(false !== $scene){
+            // to do
+        }
         // 优先关键词
         $ret1 = $this->_priorityKeyword($this->msg['Content']);
         if(!$ret1){
@@ -47,7 +51,7 @@ class HandleText extends AbstractHandle
         }
         return true;
     }
-    private function _dbKeyword()
+    private function _dbKeyword($keyWord='')
     {
         return false;
     }

@@ -11,7 +11,9 @@ use youwen\exwechat\exXMLMaker;
  */
 abstract class AbstractHandle
 {
+    // exRequest对象  方便子类调用
     protected $exRequest;
+
     public function __construct()
     {
         if(is_null($this->exRequest)){
@@ -25,6 +27,24 @@ abstract class AbstractHandle
     {
     }
 
+    /** 
+     * 获取聊天情景
+     * @return string 返回用户当前聊天场景
+     * @author baiyouwen
+     */
+    public function sceneCentext()
+    {
+        $openId = $this->exRequest->getFromOpenId();
+        // do_get_scene_by_openId
+        return false;
+    }
+
+    /**
+     * 响应信息输出
+     * @param  [type] $augment 要返回的内容
+     * @param  string $type    输出的信息类型
+     * @author baiyouwen
+     */
     public function response($augment, $type='text')
     {
         switch ($type) {
