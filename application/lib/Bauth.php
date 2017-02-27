@@ -165,7 +165,7 @@ class Bauth{
             return false;
         }
         // 检查参数
-        $actionAuth = trim($this->_allowList[$this->_module][$controller][$action]);
+        $actionAuth = $this->_allowList[$this->_module][$controller][$action];
         if(!empty($actionAuth)){
             if($actionAuth['type'] == "1"){
                 foreach ($actionAuth['param'] as $key => $value) {
