@@ -26,6 +26,7 @@ abstract class AbstractHandle
         switch ($type) {
             case 'text':
                 echo (new exXMLMaker())->createText($content);
+                exit;
                 break;
             
             default:
