@@ -27,7 +27,8 @@ class index
         // 微信消息单例
         $this->exRequest = exRequest::instance();
         // 非正常请求
-        if(empty($this->exRequest->getOriginalMsg())){
+        $OriginalMsg = $this->exRequest->getOriginalMsg();
+        if(empty($OriginalMsg)){
             exLog::log('未获取到消息', 'error');
             exit('empty msg');
         }
