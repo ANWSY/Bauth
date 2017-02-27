@@ -10,13 +10,13 @@ use youwen\exwechat\exLog;
 class HandleEvent extends AbstractHandle
 {
 
-    public function handle($content='')
+    public function handle($arrayMsg='')
     {
-        $msg = empty($content) ? $this->exRequest->getMsg() : $content;
+        $msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         switch ($msg['Event']) {
             // 关注公众号
             case 'subscribe':
-
+            //  
                 break;
             // 取消关注公众号
             case 'unsubscribe':
@@ -28,7 +28,7 @@ class HandleEvent extends AbstractHandle
             case 'location':break;
             // 自定义菜单事件
             case 'CLICK':
-                // $this->_response('你点击了菜单'.$this->_data['EventKey']);
+                $this->response('你点击了菜单'.$msg['EventKey']);
                 break;
             // 模板消息发送成功通知
             case 'TEMPLATESENDJOBFINISH':break;
@@ -47,8 +47,9 @@ class HandleEvent extends AbstractHandle
             // 弹出地理位置选择器的事件推送
             case 'location_select':break;
             default:
-                // $this->_response('这个类型事件还没开发呢！event ', 'text');
+                $this->response('这个类型事件还没开发呢！event ');
         }
+        exit; //阻止DEBUG信息输出
     }
     
 }

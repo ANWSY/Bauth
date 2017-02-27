@@ -10,11 +10,49 @@ use youwen\exwechat\exLog;
 class HandleText extends AbstractHandle
 {
 
-    public function handle($content='')
+    private $msg;
+    public function handle($arrayMsg='')
     {
-        $msg = empty($content) ? $this->exRequest->getMsg() : $content;
-        $this->response($msg['Content']);
-        exit; //不然会有DEBUG信息输出
+        $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
+        
+        // 优先关键词
+        $ret1 = $this->_priorityKeyword($this->msg['Content']);
+        if(!$ret1){
+            // 数据库关键词
+            $ret2 = $this->_dbKeyword($this->msg['Content']);
+            if(!$ret2){
+                // 默认消息
+                $this->_defaultReply();
+            }
+        }
+        // echo '<pre>';
+        // var_dump($ret1);
+        // print_r($ret1);
+        // var_dump($ret2);
+        // print_r( $ret2 );
+        // exit('</pre>');
+        exit; //阻止DEBUG信息输出
     }
-    
+
+    private function _priorityKeyword($keyWord='')
+    {
+        switch ($keyWord) {
+            //部分自定义优先关键字
+            case 'subscribe':$this->response('subscribe');
+                break;
+            case 'openid':$this->response($this->msg['FromUserName']);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    private function _dbKeyword()
+    {
+        return false;
+    }
+    private function _defaultReply()
+    {
+        $this->response($this->msg['Content']);
+    }
 }
