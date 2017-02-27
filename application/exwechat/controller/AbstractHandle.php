@@ -39,6 +39,15 @@ abstract class AbstractHandle
         return false;
     }
 
+    /** 
+     * 设置用户聊天场景
+     * @author baiyouwen
+     */
+    public function setScene()
+    {
+
+    }
+
     /**
      * 响应信息输出
      * @param  [type] $augment 要返回的内容
