@@ -7,23 +7,13 @@ use youwen\exwechat\exLog;
  * 微信事件消息－控制器
  *
  */
-class HandelText extends AbstractHandle
+class HandleText extends AbstractHandle
 {
-
-    private $_textMsg = [];
-
-    public function __construct($content = [])
-    {
-        if(!empty($content)){
-            $this->_textMsg = $content;
-        }
-    }
-
 
     public function handle($content='')
     {
-        $msg = empty($content) ? $this->_textMsg : $content;
-        
+        $msg = empty($content) ? $this->exRequest->getMsg() : $content;
+        $this->response($msg['Content']);
     }
     
 }

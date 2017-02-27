@@ -12,7 +12,7 @@ class HandleEvent extends AbstractHandle
 
     public function handle($content='')
     {
-        $msg = $this->exRequest->getMsg();
+        $msg = empty($content) ? $this->exRequest->getMsg() : $content;
         switch ($msg['Event']) {
             // 关注公众号
             case 'subscribe':
