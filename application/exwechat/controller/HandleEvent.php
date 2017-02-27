@@ -10,19 +10,9 @@ use youwen\exwechat\exLog;
 class HandleEvent extends AbstractHandle
 {
 
-    private $_eventMsg = [];
-
-    public function __construct($content = [])
-    {
-        if(!empty($content)){
-            $this->_eventMsg = $content;
-        }
-    }
-
-
     public function handle($content='')
     {
-        $msg = empty($content) ? $this->_eventMsg : $content;
+        $msg = $this->exRequest->getMsg();
         switch ($msg['Event']) {
             // 关注公众号
             case 'subscribe':
