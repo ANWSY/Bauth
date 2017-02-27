@@ -40,6 +40,9 @@ class index
             $redata = $exwechat->authentication();
             exit($redata);
         }
+        // 验证签名和消息来源
+        // $exwechat->do_check();
+
         // 获取用户发来的消息 － 数组格式
         $this->_msg = $this->exRequest->getMsg();
         // 微信消息分类处理
@@ -63,23 +66,17 @@ class index
             case 'text':
                 $cls = new HandleText($this->_msg);
                 $ret = $cls->handle();
-                // $this->_text();
                 break;
             // 图片消息
             case 'image':
-                break;
             // 音频消息
             case 'voice':
-                break;
             // 视频消息
             case 'video':
-                break;
             // 链接
             case 'link':
-                break;
             // 地理位置
             case 'location':
-                break;
             default:
                 $cls = new HandleDefault($this->_msg);
                 $ret = $cls->handle();
