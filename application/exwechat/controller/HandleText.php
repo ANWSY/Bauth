@@ -14,6 +14,7 @@ class HandleText extends AbstractHandle
     {
         $msg = empty($content) ? $this->exRequest->getMsg() : $content;
         $this->response($msg['Content']);
+        exit; //不然会有DEBUG信息输出
     }
     
 }
