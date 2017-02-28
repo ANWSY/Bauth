@@ -26,7 +26,7 @@ class index
         exLog::log($_GET, 'get');
         exLog::log(file_get_contents("php://input"), 'post');
         // 微信消息单例
-        $this->exRequest = exRequest::instance();
+        $this->exRequest = exRequest::instance(3);
         // 非正常请求
         $OriginalMsg = $this->exRequest->getOriginalMsg();
         exLog::log($this->exRequest->getOriginalMsg(), 'post');

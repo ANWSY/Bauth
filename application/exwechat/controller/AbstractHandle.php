@@ -34,7 +34,7 @@ abstract class AbstractHandle
      */
     public function sceneContext()
     {
-        $openId = $this->exRequest->getFromOpenId();
+        $openId = $this->exRequest->getFromUserName();
         // do_get_scene_by_openId
         return false;
     }
