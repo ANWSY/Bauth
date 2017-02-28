@@ -29,10 +29,6 @@ class index
         $this->exRequest = exRequest::instance();
         // 非正常请求
         $OriginalMsg = $this->exRequest->getOriginalMsg();
-        if(empty($OriginalMsg)){
-            exLog::log('未获取到消息', 'error');
-            exit('empty msg');
-        }
         exLog::log($this->exRequest->getOriginalMsg(), 'post');
         // 微信消息控制器
         $exwechat = new exWechat();
@@ -40,6 +36,11 @@ class index
         if (isset($_GET["echostr"])) {
             $redata = $exwechat->authentication();
             exit($redata);
+        }else{
+            // if(empty($OriginalMsg)){
+            //     exLog::log('未获取到消息', 'error');
+            //     exit('empty msg');
+            // }
         }
         // 验证签名和消息来源
         // $bool = $exwechat->check();
