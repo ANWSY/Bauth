@@ -15,6 +15,22 @@ class haha extends Controller
     public function index()
     {
         //
+        
+        $handler = new FileSessionHandler();
+        session_set_save_handler(
+            array($handler, 'open'),
+            array($handler, 'close'),
+            array($handler, 'read'),
+            array($handler, 'write'),
+            array($handler, 'destroy'),
+            array($handler, 'gc')
+            );
+
+        // the following prevents unexpected effects when using objects as save handlers
+        register_shutdown_function('session_write_close');
+
+        session_start();
+        // proceed to set and retrieve values by key from $_SESSION
     }
 
     /**
@@ -24,7 +40,9 @@ class haha extends Controller
      */
     public function create()
     {
-        //
+        $handler = new FileSessionHandler();
+        session_set_save_handler($handler, true);
+        session_start();
     }
 
     /**

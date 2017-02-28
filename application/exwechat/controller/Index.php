@@ -24,6 +24,7 @@ class index
     public function index()
     {
         exLog::log($_GET, 'get');
+        exLog::log(file_get_contents("php://input"), 'post');
         // 微信消息单例
         $this->exRequest = exRequest::instance();
         // 非正常请求
@@ -41,7 +42,7 @@ class index
             exit($redata);
         }
         // 验证签名和消息来源
-        // $exwechat->do_check();
+        // $bool = $exwechat->check();
 
         // 获取用户发来的消息 － 数组格式
         $this->_msg = $this->exRequest->getMsg();
