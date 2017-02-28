@@ -25,24 +25,30 @@ class index
     {
         exLog::log($_GET, 'get');
         exLog::log(file_get_contents("php://input"), 'post');
-        // 微信消息单例
-        $this->exRequest = exRequest::instance(3);
-        // 非正常请求
-        $OriginalMsg = $this->exRequest->getOriginalMsg();
-        exLog::log($this->exRequest->getOriginalMsg(), 'post');
+        
+        /***正式环境用一次以后可以注释的代码***/
         // 微信消息控制器
         $exwechat = new exWechat();
         // 接口配置 － 验证
         if (isset($_GET["echostr"])) {
             $redata = $exwechat->authentication();
             exit($redata);
-        }else{
-            // if(empty($OriginalMsg)){
-            //     exLog::log('未获取到消息', 'error');
-            //     exit('empty msg');
-            // }
         }
+        /***正式环境用一次以后可以注释的代码***/
+
+
+        // 微信消息单例
+        $this->exRequest = exRequest::instance(3);
+        // 非正常请求
+        $OriginalMsg = $this->exRequest->getOriginalMsg();
+
+        // if(empty($OriginalMsg)){
+        //     exLog::log('未获取到消息', 'error');
+        //     exit('empty msg');
+        // }
+
         // 验证签名和消息来源
+        // 这有一点不合理的地方是 解秘了半天数据 发现不是来自微信，太TM伤心了
         // $bool = $exwechat->check();
 
         // 获取用户发来的消息 － 数组格式
