@@ -32,7 +32,7 @@ abstract class AbstractHandle
      * @return string 返回用户当前聊天场景
      * @author baiyouwen
      */
-    public function sceneContext()
+    public function getScene()
     {
         $openId = $this->exRequest->getFromUserName();
         // do_get_scene_by_openId

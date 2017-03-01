@@ -14,8 +14,8 @@ class HandleText extends AbstractHandle
     public function handle($arrayMsg='')
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
-        //获取用户情景 － 聊天上下文
-        $scene = $this->sceneContext();
+        //获取用户聊天场景
+        $scene = $this->getScene();
         if(false !== $scene){
             // to do
         }
