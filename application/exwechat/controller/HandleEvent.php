@@ -28,14 +28,16 @@ class HandleEvent extends AbstractHandle
             case 'location':break;
             // 自定义菜单事件
             case 'CLICK':
-                $this->response('你点击了菜单'.$msg['EventKey']);
+                $this->response('你点击了菜单: '.$msg['EventKey']);
                 break;
             // 模板消息发送成功通知
             case 'TEMPLATESENDJOBFINISH':break;
             // 菜单跳转链接
             case 'VIEW':break;
             // 扫码推事件的事件推送
-            case 'scancode_push':break;
+            case 'scancode_push':
+                $this->response('扫码行为: 二维码内容是： '.$msg['ScanCodeInfo']['ScanResult']);
+            break;
             // 扫码推事件且弹出“消息接收中”提示框的事件推送
             case 'scancode_waitmsg':break;
             // 弹出系统拍照发图的事件推送

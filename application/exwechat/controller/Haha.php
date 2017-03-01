@@ -3,14 +3,12 @@
 namespace app\exwechat\controller;
 
 use think\Controller;
-use think\Request;
-
 use youwen\exwechat\api\accessToken;
-use youwen\exwechat\api\ips;
-use youwen\exwechat\api\user\user;
-use youwen\exwechat\api\account\shortUrl;
 use youwen\exwechat\api\account\QRCode;
+use youwen\exwechat\api\account\shortUrl;
+use youwen\exwechat\api\ips;
 use youwen\exwechat\api\menu\menu;
+use youwen\exwechat\api\user\user;
 
 class haha extends Controller
 {
@@ -18,30 +16,74 @@ class haha extends Controller
     public function menuCreate()
     {
         $data = [];
-        $data[0]=[
-            "type"=>"click",
-            "name"=>"今日歌曲",
-            "key"=>"V1001_TODAY_MUSIC"
+        $data[0] = [
+            "type" => "click",
+            "name" => "今日歌曲",
+            "key" => "V1001_TODAY_MUSIC",
         ];
-        $data[1]=[
-            "name"=>"菜单",
+        $data[1] = [
+            "name" => "高级1",
             "sub_button" => [
                 [
-                    "type"=>"view",
-                    "name"=>"搜索",
-                    "url"=>"http://www.soso.com/"
+                    "type"=> "scancode_waitmsg", 
+                    "name"=> "扫码带提示", 
+                    "key"=> "rselfmenu_0_0", 
+                    "sub_button"=>[ ]
                 ],
                 [
-                    "type"=>"view",
-                    "name"=>"exwechat",
-                    "url"=>"http://www.exwechat.com/"
+                    "type"=> "scancode_push", 
+                    "name"=> "扫码推事件", 
+                    "key"=> "rselfmenu_0_1", 
+                    "sub_button"=> [ ]
                 ],
                 [
-                    "type"=>"view",
-                    "name"=>"haha",
-                    "url"=>"http://demo.exwechat.com/"
+                    "type"=> "pic_sysphoto", 
+                    "name"=> "系统拍照发图", 
+                    "key"=> "rselfmenu_1_0", 
+                    "sub_button"=> [ ]
                 ],
-            ]
+                [
+                    "type"=> "pic_photo_or_album", 
+                    "name"=> "拍照或相册发图", 
+                    "key"=> "rselfmenu_1_1", 
+                    "sub_button"=> [ ]
+                ],
+                [
+                    "type"=>"pic_weixin", 
+                    "name"=>"微信相册发图", 
+                    "key"=>"rselfmenu_1_2", 
+                    "sub_button"=>[ ]
+                ],
+            ],
+        ];
+        $data[2] = [
+            "name" => "高级2",
+            "sub_button" => [
+                [
+                    "name"=> "发送位置", 
+                    "type"=> "location_select", 
+                    "key"=> "rselfmenu_2_0"
+                ],
+                [
+                    // "type"=> "media_id", 
+                    "type"=> "click", 
+                    "name"=> "获取一张图片", 
+                    // "media_id"=> "MEDIA_ID1"
+                    "key" => "还未上传图片",
+                ],
+                [
+                    // "type"=> "view_limited", 
+                    "type"=> "click", 
+                    "name"=> "打开某图文消息", 
+                    // "media_id"=> "MEDIA_ID2"
+                    "key" => "还未指定图文",
+                ],
+                [
+                    "type" => "view",
+                    "name" => "bauth",
+                    "url" => "http://demo.exwechat.com/",
+                ]
+            ],
         ];
         $menu['button'] = $data;
         // echo '<pre>';
@@ -50,7 +92,15 @@ class haha extends Controller
         $class = new menu($_GET['token']);
         $ret = $class->create($menu);
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
+        exit('</pre>');
+    }
+    public function menuDelete()
+    {
+        $class = new menu($_GET['token']);
+        $ret = $class->delete();
+        echo '<pre>';
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -59,7 +109,7 @@ class haha extends Controller
         $class = new menu($_GET['token']);
         $ret = $class->menuInfo();
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -68,7 +118,7 @@ class haha extends Controller
         $class = new menu($_GET['token']);
         $ret = $class->get();
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -77,7 +127,7 @@ class haha extends Controller
         $class = new QRCode($_GET['token']);
         $ret = $class->temporaryQR($_GET['scene_id']);
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -86,10 +136,9 @@ class haha extends Controller
         $class = new shortUrl($_GET['token']);
         $ret = $class->create($_GET['url']);
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
-
 
     public function remark()
     {
@@ -99,7 +148,7 @@ class haha extends Controller
         $class = new user($token);
         $ret = $class->remark($data['openid'], $data['remark']);
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -110,7 +159,7 @@ class haha extends Controller
         $class = new user($token);
         $ret = $class->getBlackList();
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
     public function getUserInfo()
@@ -120,7 +169,7 @@ class haha extends Controller
         $class = new user($token);
         $ret = $class->getUserInfo($openid);
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -130,7 +179,7 @@ class haha extends Controller
         $class = new user($token);
         $ret = $class->getUsers();
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -140,7 +189,7 @@ class haha extends Controller
         $class = new ips($token);
         $ret = $class->getIps();
         echo '<pre>';
-        print_r( $ret );
+        print_r($ret);
         exit('</pre>');
     }
 
@@ -152,7 +201,7 @@ class haha extends Controller
         $access = new accessToken($appid, $appsecret);
         $token = $access->getAccessToken();
         echo '<pre>';
-        print_r( $token );
+        print_r($token);
         exit('</pre>');
     }
 
@@ -164,7 +213,7 @@ class haha extends Controller
     public function index()
     {
         //
-        
+
         $handler = new FileSessionHandler();
         session_set_save_handler(
             array($handler, 'open'),
@@ -173,7 +222,7 @@ class haha extends Controller
             array($handler, 'write'),
             array($handler, 'destroy'),
             array($handler, 'gc')
-            );
+        );
 
         // the following prevents unexpected effects when using objects as save handlers
         register_shutdown_function('session_write_close');

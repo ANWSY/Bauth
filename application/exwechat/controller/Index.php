@@ -39,7 +39,7 @@ class index
         }
 
         // 微信消息单例 和 验证消息签名
-        $this->exRequest = exRequest::instance(2, true);
+        $this->exRequest = exRequest::instance(2, false);
         if($this->exRequest->errorCode){
             exit($this->exRequest->errorMsg);
         }
