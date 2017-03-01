@@ -15,6 +15,45 @@ use youwen\exwechat\api\menu\menu;
 class haha extends Controller
 {
 
+    public function menuCreate()
+    {
+        $data = [];
+        $data[0]=[
+            "type"=>"click",
+            "name"=>"今日歌曲",
+            "key"=>"V1001_TODAY_MUSIC"
+        ];
+        $data[1]=[
+            "name"=>"菜单",
+            "sub_button" => [
+                [
+                    "type"=>"view",
+                    "name"=>"搜索",
+                    "url"=>"http://www.soso.com/"
+                ],
+                [
+                    "type"=>"view",
+                    "name"=>"exwechat",
+                    "url"=>"http://www.exwechat.com/"
+                ],
+                [
+                    "type"=>"view",
+                    "name"=>"haha",
+                    "url"=>"http://demo.exwechat.com/"
+                ],
+            ]
+        ];
+        $menu['button'] = $data;
+        // echo '<pre>';
+        // print_r( json_encode($menu) );
+        // exit('</pre>');
+        $class = new menu($_GET['token']);
+        $ret = $class->create($menu);
+        echo '<pre>';
+        print_r( $ret );
+        exit('</pre>');
+    }
+
     public function menuInfo()
     {
         $class = new menu($_GET['token']);
