@@ -69,14 +69,20 @@ class index
                 break;
             // 图片消息
             case 'image':
+                $cls = new HandleDefault('你发了个图片，我告诉你图片不要随便发。尤其不要发脸部照片，不安全。');
+                $ret = $cls->handle();
+                break;
+            // 地理位置
+            case 'location':
+                $cls = new HandleLocation($this->_msg);
+                $ret = $cls->handle();
+                break;
             // 音频消息
             case 'voice':
             // 视频消息
             case 'video':
             // 链接
             case 'link':
-            // 地理位置
-            case 'location':
             default:
                 $cls = new HandleDefault($this->_msg);
                 $ret = $cls->handle();

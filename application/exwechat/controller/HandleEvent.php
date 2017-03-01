@@ -49,7 +49,15 @@ class HandleEvent extends AbstractHandle
             // 弹出微信相册发图器的事件推送
             case 'pic_weixin':break;
             // 弹出地理位置选择器的事件推送
-            case 'location_select':break;
+            case 'location_select':
+                $text = "上传个人位置\n";
+                $text .= 'Location_X:'.$msg['SendLocationInfo']['Location_X']."\n";
+                $text .= 'Location_Y:'.$msg['SendLocationInfo']['Location_Y']."\n";
+                $text .= 'Scale:'.$msg['SendLocationInfo']['Scale']."\n";
+                $text .= 'Label:'.$msg['SendLocationInfo']['Label']."\n";
+                $text .= 'Poiname:'.$msg['SendLocationInfo']['Poiname']."\n";
+                $this->response($text);
+            break;
             default:
                 $this->response('这个类型事件还没开发呢！event ');
         }

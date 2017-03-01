@@ -11,11 +11,11 @@ class HandleDefault extends AbstractHandle
 {
 
     private $msg;
-    public function handle($arrayMsg='')
+    public function handle($arrayMsg='', $reylyContext='暂未开发此类型消息')
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         
-        $this->response('暂未开发此类型消息');
+        $this->response($reylyContext);
 
         exit; //阻止DEBUG信息输出
     }
