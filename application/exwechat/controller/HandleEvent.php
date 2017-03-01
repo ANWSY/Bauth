@@ -39,7 +39,9 @@ class HandleEvent extends AbstractHandle
                 $this->response('扫码行为: 二维码内容是： '.$msg['ScanCodeInfo']['ScanResult']);
             break;
             // 扫码推事件且弹出“消息接收中”提示框的事件推送
-            case 'scancode_waitmsg':break;
+            case 'scancode_waitmsg':
+                $this->response('扫码行为: 二维码内容是： '.$msg['ScanCodeInfo']['ScanResult']);
+            break;
             // 弹出系统拍照发图的事件推送
             case 'pic_sysphoto':break;
             // 弹出拍照或者相册发图的事件推送
