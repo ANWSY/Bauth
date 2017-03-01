@@ -15,11 +15,11 @@ class HandleLocation extends AbstractHandle
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $text = "上传个人位置\n";
-        $text .= 'Location_X:'.$this->msg['SendLocationInfo']['Location_X']."\n";
-        $text .= 'Location_Y:'.$this->msg['SendLocationInfo']['Location_Y']."\n";
-        $text .= 'Scale:'.$this->msg['SendLocationInfo']['Scale']."\n";
-        $text .= 'Label:'.$this->msg['SendLocationInfo']['Label']."\n";
-        $text .= 'Poiname:'.$this->msg['SendLocationInfo']['Poiname'];
+        $text .= 'Location_X:'.$this->msg['Location_X']."\n";
+        $text .= 'Location_Y:'.$this->msg['Location_Y']."\n";
+        $text .= 'Scale:'.$this->msg['Scale']."\n";
+        $text .= 'Label:'.$this->msg['Label']."\n";
+        // $text .= 'Poiname:'.$this->msg['Poiname'];
         $this->response($text);
 
         exit; //阻止DEBUG信息输出
