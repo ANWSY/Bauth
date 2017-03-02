@@ -10,6 +10,15 @@ use think\Controller;
  */
 class Demomedia extends Controller
 {
+    // 删除永久素材
+    public function del_material()
+    {
+        $class = new media($_GET['token']);
+        $ret = $class->del_material($_GET['media_id']);
+        echo '<pre>';
+        print_r($ret);
+        exit('</pre>');
+    }
     // 获取素材列表
     public function batchget_material()
     {
