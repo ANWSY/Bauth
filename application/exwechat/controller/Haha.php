@@ -197,11 +197,9 @@ class haha extends Controller
                     "media_id"=> "2l6HDOnKdL_nRpmM1svLC_iL2i7dRxREGiT2JC3tKgU"
                 ],
                 [
-                    // "type"=> "view_limited", 
-                    "type"=> "click", 
+                    "type"=> "view_limited", 
                     "name"=> "打开某图文消息", 
-                    // "media_id"=> "MEDIA_ID2"
-                    "key" => "还未指定图文",
+                    "media_id"=> "2l6HDOnKdL_nRpmM1svLCy3vdrvmeT2WoC7PLyHIJQI"
                 ],
                 [
                     "type" => "view",
