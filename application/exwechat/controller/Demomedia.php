@@ -5,10 +5,10 @@ namespace app\exwechat\controller;
 use youwen\exwechat\api\media\media;
 use think\Controller;
 /**
- * 微信交互控制器
+ * 多媒体案例
  * @author baiyouwen <youwen21@yeah.net>
  */
-class Demomedia extends Controller
+class Demomedia
 {
     // 添加图文消息中的图片
     public function news_uploadimg()
