@@ -13,17 +13,7 @@ class Demoauth extends Controller
     
     public function index()
     {
-        $redirect_uri = url('callback','', false, true);
-        $scope = 'snsapi_base';
-        $state = '123';
-        $redirect_uri = urlencode($redirect_uri);
-        $OAuth = new OAuth($this->appid, $this->secret);
-        $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
-        header('Location: '.$url);
-        exit();
-        // $this->assign('url', $url);
-        // $this->assign('redirect_uri', $redirect_uri);
-        // return $this->fetch();
+        return $this->fetch();
     }
 
     public function snsapi_base()

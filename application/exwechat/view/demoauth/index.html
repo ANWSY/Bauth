@@ -32,11 +32,11 @@
         <div class="col-lg-4">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">获取code的URL</h3>
+              <h3 class="panel-title">snsapi_base</h3>
             </div>
             <div class="panel-body">
-              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">{$url}</p>
-              <p>获取code： <a href="{$url}">点击</a></p>
+              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid）</p>
+              <p>snsapi_base： <a href="{:url('snsapi_base')}">点击</a></p>
               <p>&nbsp;</p>
             </div>
           </div>
@@ -44,10 +44,11 @@
         <div class="col-lg-4">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">回调URL：redirect_uri</h3>
+              <h3 class="panel-title">snsapi_userinfo</h3>
             </div>
             <div class="panel-body">
-              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">{$redirect_uri|urldecode}</p>
+              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）</p>
+              <p>snsapi_userinfo： <a href="{:url('snsapi_userinfo')}">点击</a></p>
               <p>&nbsp;</p>
             </div>
           </div>
