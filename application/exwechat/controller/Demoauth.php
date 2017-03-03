@@ -76,6 +76,7 @@ class Demoauth extends Controller
         $info = $OAuth->getUserInfo($ret['access_token'], $ret['openid']);
         $check = $OAuth->checkToken($ret['access_token'], $ret['openid']);
         $refresh = $OAuth->refreshToken($ret['refresh_token']);
+        header("Content-type: text/html; charset=utf-8"); 
         echo '<pre>';
         print_r( $_GET );
         echo '<br/>';
