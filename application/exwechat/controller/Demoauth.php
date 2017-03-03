@@ -12,12 +12,12 @@ class Demoauth extends Controller
     public $secret = '62df1a5d360ffbe8c8a305b5a712f61e';
     public function index()
     {
-        $redirect_uri = url('callback','', true, true);
+        $redirect_uri = url('callback','', false, true);
         $scope = 'snsapi_base';
         $state = '123';
-        // echo '<pre>';
-        // print_r( $redirect_uri );
-        // exit('</pre>');
+        echo '<pre>';
+        print_r( $redirect_uri );
+        exit('</pre>');
         $OAuth = new OAuth($this->appid, $this->secret);
         $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
         header('Location: '.$url);
