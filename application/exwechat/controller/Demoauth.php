@@ -27,6 +27,7 @@ class Demoauth extends Controller
         // print_r( $url );
         // exit('</pre>');
         $this->assign('url', $url);
+        $this->assign('redirect_uri', $redirect_uri);
         return $this->fetch();
     }
 
