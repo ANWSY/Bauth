@@ -20,14 +20,14 @@ class Demoauth extends Controller
         $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
         // header('Location: '.$url);
         // exit();
-        echo '<pre>';
-        print_r( $url );
-        exit('</pre>');
         // echo '<pre>';
         // print_r( $url );
         // exit('</pre>');
-        // $this->assign('url', $url);
-        // return $this->fetch();
+        // echo '<pre>';
+        // print_r( $url );
+        // exit('</pre>');
+        $this->assign('url', $url);
+        return $this->fetch();
     }
 
     public function callback()
