@@ -21,6 +21,7 @@ class Demoauth extends Controller
         $OAuth = new OAuth($this->appid, $this->secret);
         $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
         header('Location: '.$url);
+        exit();
         // echo '<pre>';
         // print_r( $url );
         // exit('</pre>');
