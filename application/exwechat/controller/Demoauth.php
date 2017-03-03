@@ -18,17 +18,11 @@ class Demoauth extends Controller
         $redirect_uri = urlencode($redirect_uri);
         $OAuth = new OAuth($this->appid, $this->secret);
         $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
-        // header('Location: '.$url);
-        // exit();
-        // echo '<pre>';
-        // print_r( $url );
-        // exit('</pre>');
-        // echo '<pre>';
-        // print_r( $url );
-        // exit('</pre>');
-        $this->assign('url', $url);
-        $this->assign('redirect_uri', $redirect_uri);
-        return $this->fetch();
+        header('Location: '.$url);
+        exit();
+        // $this->assign('url', $url);
+        // $this->assign('redirect_uri', $redirect_uri);
+        // return $this->fetch();
     }
 
     public function callback()
