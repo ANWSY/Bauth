@@ -73,8 +73,8 @@ class Demoauth extends Controller
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
         
-        $info = $OAuth->getUserInfo($ret['access_token'], ['openid']);
-        $check = $OAuth->checkToken($ret['access_token'], ['openid']);
+        $info = $OAuth->getUserInfo($ret['access_token'], $ret['openid']);
+        $check = $OAuth->checkToken($ret['access_token'], $ret['openid']);
         $refresh = $OAuth->refreshToken($ret['refresh_token']);
         echo '<pre>';
         print_r( $_GET );
