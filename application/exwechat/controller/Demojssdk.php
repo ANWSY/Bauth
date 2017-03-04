@@ -18,7 +18,8 @@ class Demojssdk extends Controller
      */
     public function index()
     {
-        $class = new JSSDK($_GET['token']);
+        $token = 'ohU0c5NYqySsnLRclt7-so6F5L6qpksZ1Int5s0sHclh9QVLm5tDnG4oMqHi8XH5YwHjKF5_FeMoijARXF1rvrQVeDxDcZyICRq1CpM7MISz7jHF-Ig3cl8uMUatGPEAXJMcABAPBE';
+        $class = new JSSDK($token);
         $appId = 'wx70fe57dfaad1a35f';
         $timestamp = time();
         $nonceStr = $class->createNonceStr();
@@ -27,7 +28,7 @@ class Demojssdk extends Controller
         // // print_r( $nonceStr );
         // exit('</pre>');
         // $jsapi_ticket = $class->get_jsapi_ticket();
-        $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nsahOcopfKBZOUztDRa6Zqw2vGCr4eXs_g-HUWCWo7dzQ';
+        $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nt8mccytSsdO1rByJOCi5Wz5TlRtO2FsLWo8GMRCvcUig';
         $url = $this->request->url(true);
         $signature = $class->signature($jsapi_ticket, $nonceStr, $timestamp, $url);
         $jsApiList = $class->jsApiList();
