@@ -10,6 +10,36 @@ use youwen\exwechat\api\JSSDK\JSSDK;
  */
 class Demojssdk extends Controller
 {
+    public function test()
+    {
+        echo '<pre>';
+        print_r( $this->request->url(true) );
+        exit('</pre>');
+        echo '<pre>';
+        print_r( sha1('jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nt8mccytSsdO1rByJOCi5Wz5TlRtO2FsLWo8GMRCvcUig&noncestr=123456&timestamp=1488638082&url=http://demo.bauth.exwechat.com/index.php?s=/exwechat/Demojssdk/index') );
+        exit('</pre>');
+    }
+
+    public function test1()
+    {
+        $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nt8mccytSsdO1rByJOCi5Wz5TlRtO2FsLWo8GMRCvcUig';
+        $nonceStr = '123456';
+        $timestamp = 1488638082;
+        $url = 'http://demo.bauth.exwechat.com/index.php?s=/exwechat/Demojssdk/index';
+        $str = "jsapi_ticket=$jsapi_ticket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+        $sign = sha1($str);
+        $class = new JSSDK('123');
+
+        $url2 = (string)$this->request->url(true);
+        $signature = $class->signature($jsapi_ticket, $nonceStr, $timestamp, $url2 );
+        
+        echo '<pre>';
+        echo $url, '<br/>', $url2, '<br/>';
+        print_r( $sign );
+        echo '<br/>';
+        print_r( $signature );
+        exit('</pre>');
+    }
 
     /**
      * 获取到jsapi_ticket应缓存本地
@@ -31,7 +61,8 @@ class Demojssdk extends Controller
         // exit('</pre>');
         // $jsapi_ticket = $class->get_jsapi_ticket();
         $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nt8mccytSsdO1rByJOCi5Wz5TlRtO2FsLWo8GMRCvcUig';
-        $url = $this->request->url(true);
+        // $url = $this->request->url(true);
+        $url = 'http://demo.bauth.exwechat.com/index.php?s=/exwechat/Demojssdk/index';
         $signature = $class->signature($jsapi_ticket, $nonceStr, $timestamp, $url);
         $jsApiList = $class->jsApiList();
         $this->assign('appId', $appId);
