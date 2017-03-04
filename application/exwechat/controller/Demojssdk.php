@@ -28,7 +28,7 @@ class Demojssdk extends Controller
         // exit('</pre>');
         // $jsapi_ticket = $class->get_jsapi_ticket();
         $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nsahOcopfKBZOUztDRa6Zqw2vGCr4eXs_g-HUWCWo7dzQ';
-        $url = '';
+        $url = $this->request->url(true);
         $signature = $class->signature($jsapi_ticket, $nonceStr, $timestamp, $url);
         $jsApiList = $class->jsApiList();
         $this->assign('appId', $appId);
