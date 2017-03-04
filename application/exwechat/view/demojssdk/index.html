@@ -24,21 +24,20 @@
   }
 </style>
       <h3 class="text-center bg-success" style="line-height: 40px">微信JS-SDK</h3>
-      <p class="text-center bg-success" style="line-height: 40px">微信JS-SDK说明文档 https://mp.weixin.qq.com/wiki 微信网页开发</p>
 
     <div class="container">
 
       <div class="row">
-        <h4 class="text-center bg-primary rowTitle"> OAuth2.0 获取code </h4>
-        <p class="text-center">需要在微信后台中设置 － 网页授权获取用户基本信息，设置为要回调的域名，如：demo.bauth.exwechat.com</p>
+        <h4 class="text-center bg-primary rowTitle"> JSSDK demo </h4>
+        <p class="text-center">微信JS-SDK说明文档 https://mp.weixin.qq.com/wiki 微信网页开发</p>
         <div class="col-lg-4">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">snsapi_base</h3>
+              <h3 class="panel-title">隐藏所有非基础按钮接口</h3>
             </div>
             <div class="panel-body">
-              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid）</p>
-              <p>snsapi_base： <a href="{:url('snsapi_base')}">点击</a></p>
+              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">// “基本类”按钮详见附录3</p>
+              <p>snsapi_base： <a href="javascript::wx.hideAllNonBaseMenuItem();">点击隐藏</a></p>
               <p>&nbsp;</p>
             </div>
           </div>
@@ -46,16 +45,28 @@
         <div class="col-lg-4">
           <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">snsapi_userinfo</h3>
+              <h3 class="panel-title">显示所有功能按钮接口</h3>
             </div>
             <div class="panel-body">
-              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word">snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）</p>
-              <p>snsapi_userinfo： <a href="{:url('snsapi_userinfo')}">点击</a></p>
+              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word"></p>
+              <p>snsapi_userinfo： <a href="javascript::wx.showAllNonBaseMenuItem();">点击显示</a></p>
               <p>&nbsp;</p>
             </div>
           </div>
         </div>
-
+        
+        <div class="col-lg-4">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">关闭当前网页窗口接口</h3>
+            </div>
+            <div class="panel-body">
+              <p style="WORD-BREAK: break-all; WORD-WRAP: break-word"></p>
+              <p>snsapi_base： <a href="javascript::wx.closeWindow();">点击关闭</a></p>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        </div>
       </div>
 
 

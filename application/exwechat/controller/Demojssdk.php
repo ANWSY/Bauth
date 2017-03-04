@@ -53,13 +53,7 @@ class Demojssdk extends Controller
         $class = new JSSDK($token);
         $appId = 'wx70fe57dfaad1a35f';
         $timestamp = time();
-        // $timestamp = '1488638082';
-        // $nonceStr = $class->createNonceStr();
-        $nonceStr = '123456';
-        // echo '<pre>';
-        // echo $appId,'<br/>',$timestamp,'<br/>',$nonceStr,'<br/>';
-        // // print_r( $nonceStr );
-        // exit('</pre>');
+        $nonceStr = $class->createNonceStr();
         // $jsapi_ticket = $class->get_jsapi_ticket();
         $jsapi_ticket = 'sM4AOVdWfPE4DxkXGEs8VA7chf1JZ70Hna9eQyhe7nt8mccytSsdO1rByJOCi5Wz5TlRtO2FsLWo8GMRCvcUig';
         $url = $this->request->url(true);
