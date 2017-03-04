@@ -49,8 +49,9 @@ class Democom
 
         $access = new accessToken($appid, $appsecret);
         $token = $access->getAccessToken();
-        echo '<pre>';
-        print_r($token);
-        exit('</pre>');
+        exit(json_encode($token));
+        // echo '<pre>';
+        // print_r($token);
+        // exit('</pre>');
     }
 }
