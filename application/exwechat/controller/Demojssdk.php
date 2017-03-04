@@ -21,8 +21,10 @@ class Demojssdk extends Controller
         $token = 'ohU0c5NYqySsnLRclt7-so6F5L6qpksZ1Int5s0sHclh9QVLm5tDnG4oMqHi8XH5YwHjKF5_FeMoijARXF1rvrQVeDxDcZyICRq1CpM7MISz7jHF-Ig3cl8uMUatGPEAXJMcABAPBE';
         $class = new JSSDK($token);
         $appId = 'wx70fe57dfaad1a35f';
-        $timestamp = time();
-        $nonceStr = $class->createNonceStr();
+        // $timestamp = time();
+        $timestamp = '1488638082';
+        // $nonceStr = $class->createNonceStr();
+        $nonceStr = '123456';
         // echo '<pre>';
         // echo $appId,'<br/>',$timestamp,'<br/>',$nonceStr,'<br/>';
         // // print_r( $nonceStr );
