@@ -8,9 +8,15 @@ use youwen\exwechat\api\OAuth\OAuth;
 
 class Demoauth extends Controller
 {
-    public $appid = 'wx70fe57dfaad1a35f';
-    public $secret = '62df1a5d360ffbe8c8a305b5a712f61e';
+    public $appid = '';
+    public $secret = '';
     
+    public function __construct()
+    {
+        $weconf = new WechatConfig();
+        $this->appid = $weconf->appid;
+        $this->secret = $weconf->secret;
+    }
     public function index()
     {
         return $this->fetch();
