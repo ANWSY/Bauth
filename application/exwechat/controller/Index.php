@@ -38,8 +38,13 @@ class index
             exit($ret);
         }
 
+        $conf = new WechatConfig();
+        $config = [];
+        $config['appid'] = $conf->appid;
+        $config['token'] = $conf->token;
+        $config['encodingAesKey'] = $conf->encodingAesKey;
         // 微信消息单例 和 验证消息签名
-        $this->exRequest = exRequest::instance(2, false);
+        $this->exRequest = exRequest::instance(2, false, $config);
         if($this->exRequest->errorCode){
             exit($this->exRequest->errorMsg);
         }

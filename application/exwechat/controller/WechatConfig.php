@@ -13,12 +13,15 @@ class WechatConfig
 {
     public $appid = 'wx70fe57dfaad1a35f';
     public $secret = '62df1a5d360ffbe8c8a305b5a712f61e';
+    public $encodingAesKey='da8yIZvckoaMVVpbOPo7YN0KdOa71DataVoan4Tmq2i';
+    public $token='bjnqCQ1440899050';
 
-    public function __construct($FormUserName='')
-    {
-    	// get appid/secret  by  FormUserName
-        // 公众号不多的情况下 可以把FormUserName 和 appid 的对应关系 写到配置中 
-    }
+    // 欠周到
+    // public function __construct($FormUserName='')
+    // {
+    // 	// get appid/secret  by  FormUserName
+    //     // 公众号不多的情况下 可以把FormUserName 和 appid 的对应关系 写到配置中 
+    // }
 
     public function getAccessToken()
     {
