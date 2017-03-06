@@ -1,6 +1,7 @@
 <?php
 namespace app\exwechat\controller;
 
+use youwen\exwechat\exRequest;
 use youwen\exwechat\exLog;
 
 /**
@@ -10,10 +11,10 @@ use youwen\exwechat\exLog;
 class HandleDefault extends AbstractHandle
 {
 
-    private $msg;
+    // private $msg;
     public function handle($arrayMsg='', $reylyContext='暂未开发此类型消息')
     {
-        $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
+        // $this->msg = empty($arrayMsg) ? exRequest::instance()->getMsg() : $arrayMsg;
         
         $this->response($reylyContext);
 
