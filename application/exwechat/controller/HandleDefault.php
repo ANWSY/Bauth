@@ -12,7 +12,7 @@ class HandleDefault extends AbstractHandle
 {
 
     // private $msg;
-    public function handle($arrayMsg='', $reylyContext='暂未开发此类型消息')
+    public function handle($reylyContext='')
     {
         // $this->msg = empty($arrayMsg) ? exRequest::instance()->getMsg() : $arrayMsg;
         
