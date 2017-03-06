@@ -81,7 +81,7 @@ class index
                 break;
             // 图片消息
             case 'image':
-                $cls = new HandleDefault('你发了个图片，我告诉你图片不要随便发。尤其不要发脸部照片，不安全。');
+                $cls = new HandleDefault('', '你发了个图片，我告诉你图片不要随便发。尤其不要发脸部照片，不安全。');
                 $ret = $cls->handle();
                 break;
             // 地理位置
