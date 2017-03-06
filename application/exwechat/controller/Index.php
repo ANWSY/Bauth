@@ -38,13 +38,20 @@ class index
             exit($ret);
         }
 
-        $conf = new WechatConfig();
+        // 微信消息单例 和 验证消息签名
+        $this->exRequest = exRequest::instance();
+        $ToUserName = $this->exRequest->getToUserName();
+        // 根据ToUserName获取 appid, token等对应信息
+        $conf = new WechatConfig($ToUserName);
         $config = [];
         $config['appid'] = $conf->appid;
         $config['token'] = $conf->token;
         $config['encodingAesKey'] = $conf->encodingAesKey;
-        // 微信消息单例 和 验证消息签名
-        $this->exRequest = exRequest::instance(2, false, $config);
+        // $encryptType = $conf->encryptType;
+        $encryptType = 2;
+        // 提取微信消息
+        $this->exRequest->extractMsg($encryptType, $config, false);
+
         if($this->exRequest->errorCode){
             exit($this->exRequest->errorMsg);
         }
