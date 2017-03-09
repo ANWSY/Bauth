@@ -53,10 +53,10 @@ class Base extends Controller {
         if(!in_array($reqRootId, $topIds)){
             $reqRootId = $topIds[0];
         }
-        if(isset($_SESSION['sideTree'])){
-            $sideTree = $_SESSION['sideTree'];
+        if(isset($_SESSION['sideTree'.$reqRootId])){
+            $sideTree = $_SESSION['sideTree'.$reqRootId];
         }else{
-            $sideTree = $_SESSION['sideTree'] = $menu->getSideTree($reqRootId);
+            $sideTree = $_SESSION['sideTree'.$reqRootId] = $menu->getSideTree($reqRootId);
         }
 
         $this->assign('_reqRootId', $reqRootId);
