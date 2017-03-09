@@ -48,10 +48,10 @@ class Base extends Controller {
             $topMenu = $_SESSION['topMenu'];
         }else{
             $topMenu = $_SESSION['topMenu'] = $menu->getTopMenu('admin');
-        }
-        $topIds = array_column($topMenu, 'id');
-        if(!in_array($reqRootId, $topIds)){
-            $reqRootId = $topIds[0];
+            $topIds = array_column($topMenu, 'id');
+            if(!in_array($reqRootId, $topIds)){
+                $reqRootId = $topIds[0];
+            }
         }
         if(isset($_SESSION['sideTree'.$reqRootId])){
             $sideTree = $_SESSION['sideTree'.$reqRootId];
