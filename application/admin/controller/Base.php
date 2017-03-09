@@ -38,7 +38,11 @@ class Base extends Controller {
         }
 
         $menu = new Menu($auth->getPower(), $auth->getAllowId());
-        $reqId = $menu->getId($module, $controller, $action);
+        if(isset($_SESSION['reqId'.$module.$controller.$action])){
+            $reqId = $_SESSION['reqId'.$module.$controller.$action];
+        }else{
+            $reqId = $_SESSION['reqId'.$module.$controller.$action] = $menu->getId($module, $controller, $action);
+        }
         if(isset($_SESSION['reqRootId'.$reqId])){
             $reqRootId = $_SESSION['reqRootId'.$reqId];
         }else{
