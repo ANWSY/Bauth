@@ -37,7 +37,9 @@ class Administrator extends Model{
     //用户退出
     public function logout()
     {
-        Session::delete('userInfo');
+        // Session::delete('userInfo');
+        // Session::clear();
+        Session::destroy();
         return true;
     }
 

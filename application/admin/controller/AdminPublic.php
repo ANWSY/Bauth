@@ -56,6 +56,7 @@ class AdminPublic extends Controller {
             //后台系统用户行为记录
             \app\lib\BehaviorRecording::writeLog($user_id, 'AdminPublic', 'logout', '退出登录');
             (new adminModel())->logout();
+            // $_SESSION = null;
             return $this->success('退出成功！', url('login'));
         } else {
             $this->redirect('login');
