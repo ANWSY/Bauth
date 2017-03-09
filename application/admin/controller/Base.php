@@ -30,7 +30,6 @@ class Base extends Controller {
             $ret = $auth->setAllowList($_SESSION['allowList']);
         }else{
             $allowList = $auth->authInit();
-            // 保存
             $_SESSION['allowList'] = $allowList;
         }
 
@@ -40,13 +39,25 @@ class Base extends Controller {
 
         $menu = new Menu($auth->getPower(), $auth->getAllowId());
         $reqId = $menu->getId($module, $controller, $action);
-        $reqRootId = $menu->getRootId($reqId);
-        $topMenu = $menu->getTopMenu('admin');
+        if(isset($_SESSION['reqRootId'.$reqId])){
+            $reqRootId = $_SESSION['reqRootId'.$reqId];
+        }else{
+            $reqRootId = $_SESSION['reqRootId'.$reqId] = $menu->getRootId($reqId);
+        }
+        if(isset($_SESSION['topMenu'])){
+            $topMenu = $_SESSION['topMenu'];
+        }else{
+            $topMenu = $_SESSION['topMenu'] = $menu->getTopMenu('admin');
+        }
         $topIds = array_column($topMenu, 'id');
         if(!in_array($reqRootId, $topIds)){
             $reqRootId = $topIds[0];
         }
-        $sideTree = $menu->getSideTree($reqRootId);
+        if(isset($_SESSION['sideTree'])){
+            $sideTree = $_SESSION['sideTree'];
+        }else{
+            $sideTree = $_SESSION['sideTree'] = $menu->getSideTree($reqRootId);
+        }
 
         $this->assign('_reqRootId', $reqRootId);
         $this->assign('_sideList', $sideTree);
