@@ -18,15 +18,20 @@ class Bauth{
             $this->_rootPower = true;
         }
         $this->_module = strtolower($module);
+    }
+
+    public function authInit()
+    {
         // 获取有权限的ID
-        $this->_allowIds = $this->_loadAllowIdsByUid($uid);
+        $this->_allowIds = $this->_loadAllowIdsByUid($this->_uid);
         $this->_allowIds .= ','.$this->_publicIds();
         // 获取有权限的菜单
-        $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($module, ['hide'=>['in', '0,1'], 'is_dev'=>['in', '0,1']]);
+        $menuList = (new Menu($this->_rootPower, $this->_allowIds))->getMenu($this->_module, ['hide'=>['in', '0,1'], 'is_dev'=>['in', '0,1']]);
         // 生成权限数组
         $this->_allowList = $this->_generateList($menuList);
         $pub = $this->_publicAllow();
         $this->_allowList=array_merge_recursive_distinct($this->_allowList, $pub);
+        return $this->_allowList;
     }
 
     /**
@@ -142,6 +147,11 @@ class Bauth{
         return $this->_rootPower;
     }
 
+    public function setAllowList($list)
+    {
+        $this->_allowList = $list;
+        return true;
+    }
 
     /**
      * 权限检查

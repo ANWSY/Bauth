@@ -29,12 +29,6 @@ class HandleText extends AbstractHandle
                 $this->_defaultReply();
             }
         }
-        // echo '<pre>';
-        // var_dump($ret1);
-        // print_r($ret1);
-        // var_dump($ret2);
-        // print_r( $ret2 );
-        // exit('</pre>');
         exit; //阻止DEBUG信息输出
     }
 

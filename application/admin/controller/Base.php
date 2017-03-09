@@ -25,6 +25,15 @@ class Base extends Controller {
         $action = $this->request->action();
 
         $auth = new Bauth($this->uid, $module);
+        // $auth->authInit();
+        if(isset($_SESSION['allowList'])){
+            $ret = $auth->setAllowList($_SESSION['allowList']);
+        }else{
+            $allowList = $auth->authInit();
+            // 保存
+            $_SESSION['allowList'] = $allowList;
+        }
+
         if (!$auth->check($controller, $action)) {
             $this->error('权限不足');
         }

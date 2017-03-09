@@ -55,18 +55,29 @@ class Menu
         // }
         // $ret = $this->_dbMenu->field('id,pid')->where('id='.$reqId)->find();
         // if($ret && $ret['pid']){
-        //     return $this->getReqRootId($ret['pid'], $maxLevel--);
+        //     return $this->getRootId($ret['pid'], $maxLevel--);
         // }else{
         //     return isset($ret['id'])?$ret['id']:0;
         // }
         $reqRootId = 0;
-        for ($i=0; $i < 5; $i++) { 
-            $ret = $this->_getrootId($reqId);
-            if($ret['code']){
-                $reqRootId = $ret['pid'];
-                break;
+
+        $ret = $this->_getrootId($reqId);
+        if($ret['code']){
+            $reqRootId = $ret['pid'];
+        }else{
+            $ret2 = $this->_getrootId($ret['pid']);
+            if($ret2['code']){
+                $reqRootId = $ret2['pid'];
+            }else{
+                $ret3 = $this->_getrootId($ret2['pid']);
+                if($ret3['code']){
+                    $reqRootId = $ret3['pid'];
+                }else{
+                    $reqRootId = 0;
+                }
             }
         }
+
         return $reqRootId;
     }
 
