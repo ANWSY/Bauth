@@ -38,6 +38,10 @@ class index
             exit($ret);
         }
 
+        // if($exwechat->checkIP($ip)){
+
+        // }
+
         // 微信消息单例 和 验证消息签名
         $this->exRequest = exRequest::instance();
         $ToUserName = $this->exRequest->getToUserName();
