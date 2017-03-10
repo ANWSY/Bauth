@@ -38,8 +38,9 @@ class index
             exit($ret);
         }
 
-        // if($exwechat->checkIP($ip)){
-
+        // $ip = $_SERVER[''];
+        // if(!$exwechat->checkIP($ip)){
+                // exit('不合法的访问');
         // }
 
         // 微信消息单例 和 验证消息签名
