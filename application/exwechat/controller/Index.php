@@ -24,7 +24,8 @@ class index
     public function index()
     {
         exLog::log($_GET, 'get');
-        exLog::log(file_get_contents("php://input"), 'post');
+        $postMsg = file_get_contents("php://input");
+        exLog::log($postMsg, 'post');
         
         // 微信验证控制器
         $exwechat = new exWechat();
@@ -62,6 +63,11 @@ class index
         }
         // 获取用户发来的消息 － 数组格式
         $this->_msg = $this->exRequest->getMsg();
+
+        // 保存消息
+        $FromUserName = $this->exRequest->getFromUserName();
+        // $postMsg = str_replace([' ',"\r", "\n","\t"], "", $postMsg);
+        db('we_message')->insert(['FromUserName'=>$FromUserName, 'ToUserName'=>$ToUserName, 'message'=>$postMsg, 'dateTime'=>date('Y-m-d H:i:s')]);
         // 微信消息分类处理
         $this->_msgTypeHandle();
     }
