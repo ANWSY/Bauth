@@ -27,8 +27,21 @@ class index
         $postMsg = file_get_contents("php://input");
         exLog::log($postMsg, 'post');
         
-        // 微信验证控制器
-        $exwechat = new exWechat();
+        // 微信消息单例 和 验证消息签名
+        $this->exRequest = exRequest::instance($postMsg);
+        $ToUserName = $this->exRequest->getToUserName();
+
+        // 根据ToUserName获取 appid, token等对应信息
+        $conf = new WechatConfig($ToUserName);
+        $config = [];
+        $config['appid'] = $conf->appid;
+        $config['token'] = $conf->token;
+        $config['encodingAesKey'] = $conf->encodingAesKey;
+        // $encryptType = $conf->encryptType;
+        $encryptType = 2;
+
+        // 微信验证控制器, 需要token验证消息是否通过
+        $exwechat = new exWechat($config['token']);
         // 接口配置 和 签名验证
         $ret = $exwechat->authentication();
         if(is_bool($ret)){
@@ -44,25 +57,11 @@ class index
                 // exit('不合法的访问');
         // }
 
-        // 微信消息单例 和 验证消息签名
-        $this->exRequest = exRequest::instance();
-        $ToUserName = $this->exRequest->getToUserName();
-        // 根据ToUserName获取 appid, token等对应信息
-        $conf = new WechatConfig($ToUserName);
-        $config = [];
-        $config['appid'] = $conf->appid;
-        $config['token'] = $conf->token;
-        $config['encodingAesKey'] = $conf->encodingAesKey;
-        // $encryptType = $conf->encryptType;
-        $encryptType = 2;
-        // 提取微信消息
-        $this->exRequest->extractMsg($encryptType, $config, false);
-
+        // 提取微信消息 － 数组格式
+        $this->_msg = $this->exRequest->extractMsg($encryptType, $config, false);
         if($this->exRequest->errorCode){
             exit($this->exRequest->errorMsg);
         }
-        // 获取用户发来的消息 － 数组格式
-        $this->_msg = $this->exRequest->getMsg();
 
         // 保存消息
         $FromUserName = $this->exRequest->getFromUserName();

@@ -10,11 +10,12 @@ use think\Controller;
  */
 class xxx extends Controller
 {
+
     // 上传临时素材
     public function test()
     {
         echo '<pre>';
-        print_r('xx');
+        print_r($_SERVER);
         exit('</pre>');
     }
 
