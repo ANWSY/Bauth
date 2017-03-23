@@ -68,9 +68,16 @@ class HandleEvent extends AbstractHandle
     // 对应数据库为 msg_text
     private function _saveToDB($msg='')
     {
-        $data = $msg;
         $data['id'] = '';
         $data['status'] = 1;
+        foreach ($msg as $key => $value) {
+            if(in_array($key, ['ToUserName','FromUserName','CreateTime', 'MsgType', 
+                'Event', 'EventKey'])){
+                $data[$key] = $value;
+                unset($msg[$key]);
+            }
+        }
+        $data['other'] = empty($msg)? '': json_encode($msg);
         if(isset($data['Encrypt'])) unset($data['Encrypt']);
         $ret = db('we_msg_event')->insert($data);
         return $ret;
