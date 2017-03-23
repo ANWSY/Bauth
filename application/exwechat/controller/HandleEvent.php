@@ -26,7 +26,13 @@ class HandleEvent extends AbstractHandle
             // 扫描带参数二维码事件
             case 'scan':break;
             // 上报地理位置事件
-            case 'location':break;
+            case 'LOCATION':
+                $text = "微信上报个人位置\n";
+                $text .= 'Latitude:'.$msg['Latitude']."\n";
+                $text .= 'Longitude:'.$msg['Longitude']."\n";
+                $text .= 'Longitude:'.$msg['Longitude']."\n";
+                $this->response($text);
+            break;
             // 自定义菜单事件
             case 'CLICK':
                 $this->response('你点击了菜单: '.$msg['EventKey']);
