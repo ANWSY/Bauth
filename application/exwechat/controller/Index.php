@@ -92,8 +92,10 @@ class index
                 break;
             // 图片消息
             case 'image':
-                $cls = new HandleDefault();
-                $ret = $cls->handle('你发了个图片，我告诉你图片不要随便发。尤其不要发脸部照片，不安全。');
+                $cls = new HandleImage();
+                $ret = $cls->handle();
+                // $cls = new HandleDefault();
+                // $ret = $cls->handle('你发了个图片，我告诉你图片不要随便发。尤其不要发脸部照片，不安全。');
                 break;
             // 地理位置
             case 'location':
@@ -102,8 +104,12 @@ class index
                 break;
             // 音频消息
             case 'voice':
+                $cls = new HandleVoice();
+                $ret = $cls->handle();
             // 视频消息
             case 'video':
+                $cls = new HandleVideo();
+                $ret = $cls->handle();
             // 链接
             case 'link':
             default:
