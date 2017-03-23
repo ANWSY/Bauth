@@ -2,8 +2,8 @@
 namespace app\exwechat\controller;
 
 use youwen\exwechat\exLog;
-use youwen\exwechat\exWechat;
 use youwen\exwechat\exRequest;
+use youwen\exwechat\exWechat;
 
 /**
  * 微信交互控制器
@@ -18,7 +18,7 @@ class index
 
     /**
      * 微信消息入口
-     * 
+     *
      * @author baiyouwen
      */
     public function index()
@@ -26,9 +26,9 @@ class index
         exLog::log($_GET, 'get');
         $postMsg = file_get_contents("php://input");
         exLog::log($postMsg, 'post');
-        
+
         // 微信消息单例 和 验证消息签名
-        $this->exRequest = exRequest::instance($postMsg);
+        $this->exRequest = exRequest::instance();
         $ToUserName = $this->exRequest->getToUserName();
 
         // 根据ToUserName获取 appid, token等对应信息
@@ -44,29 +44,30 @@ class index
         $exwechat = new exWechat($config['token']);
         // 接口配置 和 签名验证
         $ret = $exwechat->authentication();
-        if(is_bool($ret)){
-            if(!$ret){
+        if (is_bool($ret)) {
+            if (!$ret) {
                 exit('签名验证失败');
             }
-        }else{ //接口配置  开发者模式接入
+        } else {
+            //接口配置  开发者模式接入
             exit($ret);
         }
 
-        // $ip = $_SERVER[''];
-        // if(!$exwechat->checkIP($ip)){
-                // exit('不合法的访问');
-        // }
+        $ip = \think\Request::instance()->ip();
+        if (!$exwechat->checkIP($ip)) {
+            exit('不合法的访问');
+        }
 
         // 提取微信消息 － 数组格式
         $this->_msg = $this->exRequest->extractMsg($encryptType, $config, false);
-        if($this->exRequest->errorCode){
+        if ($this->exRequest->errorCode) {
             exit($this->exRequest->errorMsg);
         }
 
         // 保存消息
         $FromUserName = $this->exRequest->getFromUserName();
         // $postMsg = str_replace([' ',"\r", "\n","\t"], "", $postMsg);
-        db('we_message')->insert(['FromUserName'=>$FromUserName, 'ToUserName'=>$ToUserName, 'message'=>$postMsg, 'dateTime'=>date('Y-m-d H:i:s')]);
+        db('we_message')->insert(['FromUserName' => $FromUserName, 'ToUserName' => $ToUserName, 'message' => $postMsg, 'dateTime' => date('Y-m-d H:i:s')]);
         // 微信消息分类处理
         $this->_msgTypeHandle();
     }
