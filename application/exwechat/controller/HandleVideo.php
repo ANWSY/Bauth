@@ -15,7 +15,7 @@ class HandleVideo extends AbstractHandle
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $this->_saveToDB();
-
+        $this->response('你上传了视频: '.$msg['MediaId']);
         exit; //阻止DEBUG信息输出
     }
 
