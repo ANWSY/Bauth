@@ -27,11 +27,11 @@ class HandleEvent extends AbstractHandle
             case 'scan':break;
             // 上报地理位置事件
             case 'LOCATION':
-                $text = "微信上报个人位置\n";
-                $text .= 'Latitude:'.$msg['Latitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $this->response($text);
+                // $text = "微信上报个人位置\n";
+                // $text .= 'Latitude:'.$msg['Latitude']."\n";
+                // $text .= 'Longitude:'.$msg['Longitude']."\n";
+                // $text .= 'Longitude:'.$msg['Longitude']."\n";
+                // $this->response($text);
             break;
             // 自定义菜单事件
             case 'CLICK':
