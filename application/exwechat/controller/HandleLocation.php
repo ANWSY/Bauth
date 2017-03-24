@@ -4,8 +4,10 @@ namespace app\exwechat\controller;
 use youwen\exwechat\exLog;
 
 /**
- * 微信事件消息－控制器
- *
+ * 微信地理位置消息－控制器
+ * 微信地理位置共有三种消息方式（聊天发送位置｜上报地理位置｜菜单(高级)发送地理位置）
+ * 三种位置,MsgType和Event区别是：(location| event & LOCATION| event & location_select)
+ * 还有一种位置是在网页中JSSDK位置选取，不知道会传位置不，暂时没用那个功能
  */
 class HandleLocation extends AbstractHandle
 {
@@ -30,15 +32,12 @@ class HandleLocation extends AbstractHandle
     // 对应数据库为 msg_text
     public function saveToDB($msg='')
     {
-        // echo '<pre>';
-        // print_r( $msg );
-        // exit('</pre>');
         $data['id'] = '';
         $data['status'] = 1;
         if('location' == $msg['MsgType']){
             $location = $this->locationChat($msg);
         }else{
-            if(isset($msg['SendLocationInfo'])){
+            if('location_select' == $msg['Event']){
                 $location = $this->locationSelect($msg);
             }else{
                 $location = $this->locationReport($msg);
@@ -49,6 +48,7 @@ class HandleLocation extends AbstractHandle
         return $ret;
     }
 
+    // 聊天点+号 `位置` 
     public function locationChat($msg)
     {
         $location = [];
@@ -67,6 +67,10 @@ class HandleLocation extends AbstractHandle
         return $location;
     }
 
+    // 菜单(高级)发送地理位置
+    // 个人测试，菜单发送地理位置会上报三次！上报位置，聊天位置，菜单位置分别上传一次！
+    // 选择位置发送，会发送聊天位置和菜单地理位置
+    // 返回聊天界面，会上报地理位置， 两者几乎在同一时间
     public function locationSelect($msg)
     {
         $location = [];
@@ -86,6 +90,8 @@ class HandleLocation extends AbstractHandle
         return $location;
     }
 
+    // 微信上报地理位置（5秒一次或打开公众号聊天窗上报）
+    // 打开聊天会上报，发送图片返回聊天会上报，打开网页返回聊天会上报，总之每次进聊天都会上报
     public function locationReport($msg)
     {
         $location = [];
