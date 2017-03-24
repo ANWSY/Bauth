@@ -54,10 +54,12 @@ class Demoauth extends Controller
     }
 
 
+
     public function callback_base()
     {
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
+        $this->_saveAccess($ret);
         echo '<pre>';
         print_r( $_GET );
         echo '<br/>';
@@ -73,6 +75,10 @@ class Demoauth extends Controller
         $info = $OAuth->getUserInfo($ret['access_token'], $ret['openid']);
         $check = $OAuth->checkToken($ret['access_token'], $ret['openid']);
         $refresh = $OAuth->refreshToken($ret['refresh_token']);
+
+        $this->_saveAccess($ret);
+        $this->_saveUserInfo($info);
+
         header("Content-type: text/html; charset=utf-8"); 
         echo '<pre>';
         print_r( $_GET );
@@ -85,6 +91,19 @@ class Demoauth extends Controller
         echo '<br/>';
         print_r( $refresh );
         exit('</pre>');
+    }
+
+
+    private function _saveAccess($data)
+    {
+        $ret = db('oauth_access')->insert($data);
+        return $ret;
+    }
+
+    private function _saveUserInfo($userinfo)
+    {
+        $ret = db('oauth_userinfo')->insert($userinfo);
+        return $ret;
     }
 
 }
