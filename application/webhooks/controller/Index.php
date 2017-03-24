@@ -13,8 +13,13 @@ class Index
 {
     public function oschina()
     {
-        exLog::log($_GET, 'get', ['path'=>'/runtime/log/webhooks/']);
-        exLog::log(file_get_contents("php://input"), 'input', ['path'=>'/runtime/log/webhooks/']);
-        exit('0');
+        $json = file_get_contents("php://input");
+        exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
+        $arr = json_decode($json, ture);
+
+        if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
+            exit('0');
+        }
+        
     }
 }
