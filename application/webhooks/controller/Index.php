@@ -14,7 +14,7 @@ class Index
     public function oschina()
     {
         exLog::log($_GET, 'get', ['path'=>'/runtime/log/webhooks/']);
-        exLog::log($_POST, 'post', ['path'=>'/runtime/log/webhooks/']);
+        exLog::log(file_get_contents("php://input"), 'input', ['path'=>'/runtime/log/webhooks/']);
         exit('0');
     }
 }
