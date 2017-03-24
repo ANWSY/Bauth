@@ -32,10 +32,10 @@ class HandleLocation extends AbstractHandle
     {
         $data['id'] = '';
         $data['status'] = 1;
-        if(isset($msg['Location_X'])){
-            $location = $this->locationSelect();
+        if(isset($msg['SendLocationInfo'])){
+            $location = $this->locationSelect($msg);
         }else{
-            $location = $this->locationReport();
+            $location = $this->locationReport($msg);
         }
         $data = array_merge($location,$data);
         $ret = db('we_msg_location')->insert($data);
@@ -69,12 +69,12 @@ class HandleLocation extends AbstractHandle
         $location['MsgType'] = $msg['MsgType'];
         $location['Event'] = $msg['Event'];
         // $location['EventKey'] = null;
-        $location['latitude'] = $msg['latitude']; // 纬度
-        $location['longitude'] = $msg['longitude']; // 经度
+        $location['latitude'] = $msg['Latitude']; // 纬度
+        $location['longitude'] = $msg['Longitude']; // 经度
         $location['accuracy'] = $msg['Precision']; // 精度
         // $location['altitude'] = null;
-        $location['Label'] = $msg['Label'];
-        $location['Poiname'] = $msg['Poiname'];
+        // $location['Label'] = null;
+        // $location['Poiname'] = null;
         return $location;
     }
 }
