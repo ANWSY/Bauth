@@ -13,7 +13,9 @@ class HandleEvent extends AbstractHandle
     public function handle($arrayMsg='')
     {
         $msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
-        $this->_saveToDB($msg);
+        if('LOCATION' != $msg['Event']){
+            $this->_saveToDB($msg);
+        }
         switch ($msg['Event']) {
             // 关注公众号
             case 'subscribe':
