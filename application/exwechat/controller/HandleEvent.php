@@ -29,8 +29,8 @@ class HandleEvent extends AbstractHandle
             case 'scan':break;
             // 上报地理位置事件
             case 'LOCATION':
-                // $cls = new HandleLocation($msg);
-                // $ret = $cls->saveToDB($msg);
+                $cls = new HandleLocation($msg);
+                $ret = $cls->saveToDB($msg);
                 $text = "微信上报个人位置LOCATION\n";
                 $text .= 'Latitude:'.$msg['Latitude']."\n";
                 $text .= 'Longitude:'.$msg['Longitude']."\n";
