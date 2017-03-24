@@ -15,7 +15,7 @@ class HandleLocation extends AbstractHandle
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $this->saveToDB($this->msg);
-        $text = "上传个人位置\n";
+        $text = "聊天中的个人位置\n";
         $text .= 'Location_X:'.$this->msg['Location_X']."\n";
         $text .= 'Location_Y:'.$this->msg['Location_Y']."\n";
         $text .= 'Scale:'.$this->msg['Scale']."\n";
@@ -30,16 +30,41 @@ class HandleLocation extends AbstractHandle
     // 对应数据库为 msg_text
     public function saveToDB($msg='')
     {
+        // echo '<pre>';
+        // print_r( $msg );
+        // exit('</pre>');
         $data['id'] = '';
         $data['status'] = 1;
-        if(isset($msg['SendLocationInfo'])){
-            $location = $this->locationSelect($msg);
+        if('location' == $msg['MsgType']){
+            $location = $this->locationChat($msg);
         }else{
-            $location = $this->locationReport($msg);
+            if(isset($msg['SendLocationInfo'])){
+                $location = $this->locationSelect($msg);
+            }else{
+                $location = $this->locationReport($msg);
+            }
         }
         $data = array_merge($location,$data);
         $ret = db('we_msg_location')->insert($data);
         return $ret;
+    }
+
+    public function locationChat($msg)
+    {
+        $location = [];
+        $location['ToUserName'] = $msg['ToUserName'];
+        $location['FromUserName'] = $msg['FromUserName'];
+        $location['CreateTime'] = $msg['CreateTime'];
+        $location['MsgType'] = $msg['MsgType'];
+        // $location['Event'] = null;
+        // $location['EventKey'] = null;
+        $location['latitude'] = $msg['Location_X']; // 纬度
+        $location['longitude'] = $msg['Location_Y']; // 经度
+        $location['accuracy'] = $msg['Scale']; // 精度
+        // $location['altitude'] = null;
+        $location['Label'] = $msg['Label'];
+        $location['MsgId'] = $msg['MsgId'];
+        return $location;
     }
 
     public function locationSelect($msg)
@@ -57,6 +82,7 @@ class HandleLocation extends AbstractHandle
         // $location['altitude'] = null;
         $location['Label'] = $msg['SendLocationInfo']['Label'];
         $location['Poiname'] = $msg['SendLocationInfo']['Poiname'];
+        // $location['MsgId'] = null;
         return $location;
     }
 
@@ -75,6 +101,7 @@ class HandleLocation extends AbstractHandle
         // $location['altitude'] = null;
         // $location['Label'] = null;
         // $location['Poiname'] = null;
+        // $location['MsgId'] = null;
         return $location;
     }
 }
