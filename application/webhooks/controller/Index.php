@@ -15,7 +15,6 @@ class Index
     {
         exLog::log($_GET, 'get', ['path'=>'/runtime/log/webhooks/']);
         exLog::log($_POST, 'post', ['path'=>'/runtime/log/webhooks/']);
-        
         exit('0');
     }
 }
