@@ -13,6 +13,7 @@ class Demoauth extends Controller
     
     public function __construct()
     {
+        parent::__construct();
         $weconf = new WechatConfig();
         $this->appid = $weconf->appid;
         $this->secret = $weconf->secret;

@@ -13,29 +13,19 @@ class HandleEvent extends AbstractHandle
     public function handle($arrayMsg='')
     {
         $msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
-        if('LOCATION' != $msg['Event']){
+        if('LOCATION' != $msg['Event'] || 'location_select' != $msg['Event']){
             $this->_saveToDB($msg);
         }
         switch ($msg['Event']) {
             // 关注公众号
             case 'subscribe':
-            //  
+            // 
                 break;
             // 取消关注公众号
             case 'unsubscribe':
-
                 break;
             // 扫描带参数二维码事件
             case 'scan':break;
-            // 上报地理位置事件
-            case 'LOCATION':
-                $cls = new HandleLocation($msg);
-                $ret = $cls->saveToDB($msg);
-                $text = "微信上报个人位置LOCATION\n";
-                $text .= 'Latitude:'.$msg['Latitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $this->response($text);
             break;
             // 自定义菜单事件
             case 'CLICK':
@@ -59,7 +49,16 @@ class HandleEvent extends AbstractHandle
             case 'pic_photo_or_album':break;
             // 弹出微信相册发图器的事件推送
             case 'pic_weixin':break;
-            // 弹出地理位置选择器的事件推送
+            // 上报地理位置事件
+            case 'LOCATION':
+                $cls = new HandleLocation($msg);
+                $ret = $cls->saveToDB($msg);
+                $text = "微信上报个人位置LOCATION\n";
+                $text .= 'Latitude:'.$msg['Latitude']."\n";
+                $text .= 'Longitude:'.$msg['Longitude']."\n";
+                $text .= 'Longitude:'.$msg['Longitude']."\n";
+                $this->response($text);
+            // 菜单弹出地理位置选择器的事件推送
             case 'location_select':
                 $cls = new HandleLocation($msg);
                 $ret = $cls->saveToDB($msg);
