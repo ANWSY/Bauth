@@ -136,7 +136,14 @@ class Demoauth extends Controller
     // replace into think_oauth_userinfo set openid=123,nickname='xiaobai',sex=1,language='zh_CN',city='朝阳',province='北京',country='',headimgurl='',privilege=null,unionid='213213';
     private function _saveUserInfo($userinfo)
     {
-        $ret = db('oauth_userinfo')->insert($userinfo);
+        // $ret = db('oauth_userinfo')->insert($userinfo);
+        $sql = 'REPLACE INTO think_oauth_userinfo SET ';
+        $str = '';
+        foreach ($userinfo as $key => $value) {
+             $str .= "`$key`='$value' ";
+        }
+        $sql .= $str;
+        $ret = db('oauth_userinfo')->execute($sql);
         return $ret;
     }
 
