@@ -5,6 +5,9 @@ namespace app\exwechat\controller;
 use think\Controller;
 use youwen\exwechat\api\accessToken;
 use youwen\exwechat\api\OAuth\OAuth;
+use youwen\exwechat\exLog;
+
+define('CURL_LOG', true);
 
 class Demoauth extends Controller
 {
@@ -57,8 +60,14 @@ class Demoauth extends Controller
 
     public function callback_base()
     {
+        define(CURL_LOG, true);
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
+        if($ret['errcode']){
+            echo '<pre>';
+            print_r( $ret );
+            exit('</pre>');
+        }
         $this->_saveAccess($ret);
         echo '<pre>';
         print_r( $_GET );
@@ -71,8 +80,17 @@ class Demoauth extends Controller
     {
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
-        
+        if($ret['errcode']){
+            echo '<pre>';
+            print_r( $ret );
+            exit('</pre>');
+        }
         $info = $OAuth->getUserInfo($ret['access_token'], $ret['openid']);
+        if($info['errcode']){
+            echo '<pre>';
+            print_r( $info );
+            exit('</pre>');
+        }
         $check = $OAuth->checkToken($ret['access_token'], $ret['openid']);
         $refresh = $OAuth->refreshToken($ret['refresh_token']);
 
@@ -93,13 +111,26 @@ class Demoauth extends Controller
         exit('</pre>');
     }
 
-
+    /**
+     * 存在更新，不存在则插入
+     * @DateTime 2017-03-25T12:33:06+0800
+     */
     private function _saveAccess($data)
     {
-        $ret = db('oauth_access')->insert($data);
-        return $ret;
+        $check = db('oauth_access')->where(['openid'=>$data['openid'], 'scope'=>$data['scope']])->find();
+        if($check){
+            $ret = db('oauth_access')->where(['openid'=>$data['openid'], 'scope'=>$data['scope']])->update($data);
+            return $ret;
+        }else{
+            $ret = db('oauth_access')->insert($data);
+            return $ret;
+        }
     }
 
+    /**
+     * 因为这个有唯一主键openid所以， 可以用replace
+     */
+    // replace into think_oauth_userinfo set openid=123,nickname='xiaobai',sex=1,language='zh_CN',city='朝阳',province='北京',country='',headimgurl='',privilege=null,unionid='213213';
     private function _saveUserInfo($userinfo)
     {
         $ret = db('oauth_userinfo')->insert($userinfo);
