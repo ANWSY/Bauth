@@ -63,7 +63,7 @@ class Demoauth extends Controller
         define(CURL_LOG, true);
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
-        if($ret['errcode']){
+        if(isset($ret['errcode'])){
             echo '<pre>';
             print_r( $ret );
             exit('</pre>');
@@ -80,7 +80,7 @@ class Demoauth extends Controller
     {
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
-        if($ret['errcode']){
+        if(isset($ret['errcode'])){
             echo '<pre>';
             print_r( $ret );
             exit('</pre>');
