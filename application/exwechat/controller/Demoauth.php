@@ -7,7 +7,7 @@ use youwen\exwechat\api\accessToken;
 use youwen\exwechat\api\OAuth\OAuth;
 use youwen\exwechat\exLog;
 
-define(CURL_LOG, true);
+define('CURL_LOG', true);
 
 class Demoauth extends Controller
 {
@@ -28,6 +28,7 @@ class Demoauth extends Controller
 
     public function snsapi_base()
     {
+
         $redirect_uri = url('callback_base','', false, true);
         $scope = 'snsapi_base';
         $state = '123';
@@ -63,6 +64,7 @@ class Demoauth extends Controller
 
     public function callback_base()
     {
+        define(CURL_LOG, true);
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
         if(isset($ret['errcode'])){
@@ -80,6 +82,7 @@ class Demoauth extends Controller
 
     public function callback_userinfo()
     {
+        define(CURL_LOG, true);
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
         if(isset($ret['errcode'])){
