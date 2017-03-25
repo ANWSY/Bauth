@@ -7,7 +7,7 @@ use youwen\exwechat\api\accessToken;
 use youwen\exwechat\api\OAuth\OAuth;
 use youwen\exwechat\exLog;
 
-define('CURL_LOG', true);
+define(CURL_LOG, true);
 
 class Demoauth extends Controller
 {
@@ -63,7 +63,6 @@ class Demoauth extends Controller
 
     public function callback_base()
     {
-        define(CURL_LOG, true);
         $OAuth = new OAuth($this->appid, $this->secret);
         $ret = $OAuth->getToken($_GET['code']);
         if(isset($ret['errcode'])){
@@ -136,14 +135,14 @@ class Demoauth extends Controller
     // replace into think_oauth_userinfo set openid=123,nickname='xiaobai',sex=1,language='zh_CN',city='朝阳',province='北京',country='',headimgurl='',privilege=null,unionid='213213';
     private function _saveUserInfo($userinfo)
     {
-        echo '<pre>';
-        print_r( $userinfo );
-        exit('</pre>');
         // $ret = db('oauth_userinfo')->insert($userinfo);
         $sql = 'REPLACE INTO think_oauth_userinfo SET ';
         $str = '';
         foreach ($userinfo as $key => $value) {
-             $str .= "`$key`='$value' ";
+            if(is_array($value)){
+                $value = json_encode($value);
+            }
+            $str .= "`$key`='$value' ";
         }
         $sql .= $str;
         $ret = db('oauth_userinfo')->execute($sql);
