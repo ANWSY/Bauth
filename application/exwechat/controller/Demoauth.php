@@ -34,6 +34,9 @@ class Demoauth extends Controller
         $redirect_uri = urlencode($redirect_uri);
         $OAuth = new OAuth($this->appid, $this->secret);
         $url = $OAuth->getCodeUrl($redirect_uri, $scope, $state);
+        echo '<pre>';
+        print_r( $url );
+        exit('</pre>');
         header('Location: '.$url);
         exit();
         // $this->assign('url', $url);
@@ -86,7 +89,7 @@ class Demoauth extends Controller
             exit('</pre>');
         }
         $info = $OAuth->getUserInfo($ret['access_token'], $ret['openid']);
-        if($info['errcode']){
+        if(isset($info['errcode'])){
             echo '<pre>';
             print_r( $info );
             exit('</pre>');
