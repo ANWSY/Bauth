@@ -97,7 +97,7 @@ class Demoauth extends Controller
             exit('</pre>');
         }
         $check = $OAuth->checkToken($ret['access_token'], $ret['openid']);
-        $refresh = $OAuth->refreshToken($ret['refresh_token']);
+        // $refresh = $OAuth->refreshToken($ret['refresh_token']);
 
         $this->_saveAccess($ret);
         $this->_saveUserInfo($info);
@@ -145,9 +145,9 @@ class Demoauth extends Controller
             if(is_array($value)){
                 $value = json_encode($value);
             }
-            $str .= "`$key`='$value' ";
+            $str .= " `$key`='$value',";
         }
-        $sql .= $str;
+        $str = rtrim($str, ',');
         $ret = db('oauth_userinfo')->execute($sql);
         return $ret;
     }
