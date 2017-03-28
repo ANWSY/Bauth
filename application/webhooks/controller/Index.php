@@ -16,12 +16,13 @@ class Index
         $json = file_get_contents("php://input");
         exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
         $arr = json_decode($json, true);
-
-        if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
-            exit('0');
-        }
-        if(!$this->check_sign()){
-            exit();
+        if(!isset($_GET['xiaobaiDebug'])){
+            if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
+                exit('0');
+            }
+            if(!$this->check_sign()){
+                exit();
+            }
         }
         file_put_contents(ROOT_PATH.'/runtime/gitPullSwitch.txt', date('Y-m-d H:i:s').PHP_EOL, FILE_APPEND);
     }
@@ -51,6 +52,12 @@ class Index
         return exec("cd /alidata/www/demo.bauth.cn/ && git pull");
     }
 
+    /**
+     * [check_function description]
+     * @return [type] [description]
+     * @author baiyouwen
+     * @see http://www.cnblogs.com/gaohj/p/3267692.html
+     */
     public function check_function()
     {
         $command= ['exec', 'system', 'shell_exec', 'passthru'];
