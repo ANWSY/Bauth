@@ -63,6 +63,11 @@ class Index
         }
     }
 
+    /**
+     * `` 和 shell_exec是一样的
+     * @return [type] [description]
+     * @author baiyouwen
+     */
     public function haha()
     {
         echo `pwd`;
