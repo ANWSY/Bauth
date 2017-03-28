@@ -15,7 +15,7 @@ class Index
     {
         $json = file_get_contents("php://input");
         exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
-        $arr = json_decode($json, ture);
+        $arr = json_decode($json, true);
 
         if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
             exit('0');
@@ -23,7 +23,7 @@ class Index
         if(!$this->check_sign()){
             exit();
         }
-        file_put_contents('/alidata/www/demo.bauth.cn/runtime/gitPullSwitch.txt', date('Y-m-d H:i:s')."\n", FILE_APPEND);
+        file_put_contents(ROOT_PATH.'/runtime/gitPullSwitch.txt', date('Y-m-d H:i:s').PHP_EOL, FILE_APPEND);
     }
     // 权限问题 导致不成功
     public function oschina_promiss()
