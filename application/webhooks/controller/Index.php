@@ -41,12 +41,12 @@ class Index
         $ret = $this->exec_shell();
     }
 
-    public function check_sign()
+    private function check_sign()
     {
         return true;
     }
 
-    public function exec_shell()
+    private function exec_shell()
     {
         return exec("cd /alidata/www/demo.bauth.cn/ && git pull");
     }
