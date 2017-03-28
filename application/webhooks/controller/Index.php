@@ -23,7 +23,7 @@ class Index
         if(!$this->check_sign()){
             exit();
         }
-        $this->exec_shell();
+        $ret = $this->exec_shell();
     }
 
     public function check_sign()
@@ -33,7 +33,7 @@ class Index
 
     public function exec_shell()
     {
-        echo exec("cd /alidata/www/demo.bauth.cn/ && git pull");
+        return exec("cd /alidata/www/demo.bauth.cn/ && git pull");
     }
 
     public function check_function()
@@ -46,5 +46,10 @@ class Index
                 echo $value,'-not allow',"<Br/>";
             }
         }
+    }
+
+    public function haha()
+    {
+        echo `pwd`;
     }
 }
