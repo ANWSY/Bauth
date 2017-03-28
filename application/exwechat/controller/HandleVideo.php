@@ -1,8 +1,6 @@
 <?php
 namespace app\exwechat\controller;
 
-use youwen\exwechat\exLog;
-
 /**
  * 微信事件消息－控制器
  *

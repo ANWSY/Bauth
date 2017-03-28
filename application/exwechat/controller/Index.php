@@ -1,7 +1,7 @@
 <?php
 namespace app\exwechat\controller;
 
-use youwen\exwechat\exLog;
+use youwen\exwechat\exStepLog;
 use youwen\exwechat\exRequest;
 use youwen\exwechat\exWechat;
 
@@ -23,9 +23,9 @@ class index
      */
     public function index()
     {
-        exLog::log($_GET, 'get');
+        exStepLog::log($_GET, 'get');
         $postMsg = file_get_contents("php://input");
-        exLog::log($postMsg, 'post');
+        exStepLog::log($postMsg, 'post');
 
         // 微信消息单例 和 验证消息签名
         $this->exRequest = exRequest::instance();

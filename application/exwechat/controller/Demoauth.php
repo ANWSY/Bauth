@@ -5,7 +5,6 @@ namespace app\exwechat\controller;
 use think\Controller;
 use youwen\exwechat\api\accessToken;
 use youwen\exwechat\api\OAuth\OAuth;
-use youwen\exwechat\exLog;
 
 define('CURL_LOG', true);
 

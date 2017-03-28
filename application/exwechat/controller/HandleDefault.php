@@ -2,7 +2,6 @@
 namespace app\exwechat\controller;
 
 use youwen\exwechat\exRequest;
-use youwen\exwechat\exLog;
 
 /**
  * 微信事件消息－控制器

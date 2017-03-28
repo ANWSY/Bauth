@@ -1,8 +1,6 @@
 <?php
 namespace app\exwechat\controller;
 
-use youwen\exwechat\exLog;
-
 /**
  * 微信地理位置消息－控制器
  * 微信地理位置共有三种消息方式（聊天发送位置｜上报地理位置｜菜单(高级)发送地理位置）

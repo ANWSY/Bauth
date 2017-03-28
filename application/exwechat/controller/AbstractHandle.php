@@ -1,7 +1,6 @@
 <?php
 namespace app\exwechat\controller;
 
-use youwen\exwechat\exLog;
 use youwen\exwechat\exRequest;
 use youwen\exwechat\exXMLMaker;
 /**
@@ -45,7 +44,8 @@ abstract class AbstractHandle
      */
     public function setScene()
     {
-
+        
+        \think\Log::write();
     }
 
     /**
