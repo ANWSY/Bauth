@@ -52,6 +52,12 @@ class HandleText extends AbstractHandle
                 break;
             case 'openid':$this->response($this->msg['FromUserName']);
                 break;
+            case 'scene':
+                $this->setScene($this->msg['FromUserName'], 'ss');
+                break;
+            case 'getScene':
+                $this->getScene($this->msg['FromUserName']);
+                break;
             default:
                 return false;
         }

@@ -2,8 +2,6 @@
 
 namespace app\webhooks\controller;
 
-use youwen\exwechat\exLog;
-
 /**
  * 钩子系统
  * GIT钩子通知此URL
@@ -14,7 +12,7 @@ class Index
     public function oschina()
     {
         $json = file_get_contents("php://input");
-        exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
+        exStepLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
         $arr = json_decode($json, true);
         if(!isset($_GET['xiaobaiDebug'])){
             if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
@@ -30,7 +28,7 @@ class Index
     public function oschina_promiss()
     {
         $json = file_get_contents("php://input");
-        exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
+        exStepLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
         $arr = json_decode($json, ture);
 
         if(!isset($arr['password']) || 'youwen2017' == $arr['password']){

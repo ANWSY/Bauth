@@ -118,6 +118,8 @@ class Demoauth extends Controller
     /**
      * 存在更新，不存在则插入
      * @DateTime 2017-03-25T12:33:06+0800
+     *
+     * 这个地方建一个联合索引应该可以用replace
      */
     private function _saveAccess($data)
     {
