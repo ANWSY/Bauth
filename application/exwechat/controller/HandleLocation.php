@@ -22,7 +22,8 @@ class HandleLocation extends AbstractHandle
         if($this->msg['MsgType']){
 
         }
-        if($this->getScene($msg['openId'], 'location') == 'yes')
+        $scene = $this->getScene($msg['FromUserName'], 'location');
+        if( $scene && $scene['sceneValue'] == 'yes')
         {
             $text = "聊天中的个人位置\n";
             $text .= 'Location_X:'.$this->msg['Location_X']."\n";

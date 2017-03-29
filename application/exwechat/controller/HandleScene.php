@@ -13,7 +13,7 @@ class HandleScene extends AbstractHandle
     // private $msg;
     public function handle($sceneRet='')
     {
-        return $this->{$sceneRet['sceneType']}($sceneRet);
+        return $this->chat($sceneRet);
     }
 
     public function chat($sceneRet)
