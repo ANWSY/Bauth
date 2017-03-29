@@ -14,7 +14,7 @@ class HandleText extends AbstractHandle
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $bool = $this->_saveToDB();
         //获取用户聊天场景
-        $scene = $this->getScene();
+        $scene = $this->getScene($this->msg['FromUserName']);
         if(false !== $scene){
             // to do
         }
@@ -56,7 +56,9 @@ class HandleText extends AbstractHandle
                 $this->setScene($this->msg['FromUserName'], 'ss');
                 break;
             case 'getScene':
-                $this->getScene($this->msg['FromUserName']);
+                $ret = $this->getScene($this->msg['FromUserName']);
+                $msg = $ret ? $ret['sceneValue'] : '无场景';
+                $this->response($msg);
                 break;
             default:
                 return false;
