@@ -78,5 +78,6 @@ abstract class AbstractHandle
                 echo (new exXMLMaker())->createText('回复消息体类型不可解析');
                 break;
         }
+        exit;
     }
 }

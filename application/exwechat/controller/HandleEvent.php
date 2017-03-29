@@ -51,22 +51,28 @@ class HandleEvent extends AbstractHandle
             case 'LOCATION':
                 $cls = new HandleLocation($msg);
                 $ret = $cls->saveToDB($msg);
-                $text = "微信上报个人位置LOCATION\n";
-                $text .= 'Latitude:'.$msg['Latitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $text .= 'Longitude:'.$msg['Longitude']."\n";
-                $this->response($text);
+                if($this->getScene($msg['openId'], 'location') == 'yes')
+                {
+                    $text = "微信上报个人位置LOCATION\n";
+                    $text .= 'Latitude:'.$msg['Latitude']."\n";
+                    $text .= 'Longitude:'.$msg['Longitude']."\n";
+                    $text .= 'Longitude:'.$msg['Longitude']."\n";
+                    $this->response($text);
+                }
             // 菜单弹出地理位置选择器的事件推送
             case 'location_select':
                 $cls = new HandleLocation($msg);
                 $ret = $cls->saveToDB($msg);
-                $text = "上传个人位置\n";
-                $text .= 'Location_X:'.$msg['SendLocationInfo']['Location_X']."\n";
-                $text .= 'Location_Y:'.$msg['SendLocationInfo']['Location_Y']."\n";
-                $text .= 'Scale:'.$msg['SendLocationInfo']['Scale']."\n";
-                $text .= 'Label:'.$msg['SendLocationInfo']['Label']."\n";
-                $text .= 'Poiname:'.$msg['SendLocationInfo']['Poiname']."\n";
-                $this->response($text);
+                if($this->getScene($msg['openId'], 'location') == 'yes')
+                {
+                    $text = "上传个人位置\n";
+                    $text .= 'Location_X:'.$msg['SendLocationInfo']['Location_X']."\n";
+                    $text .= 'Location_Y:'.$msg['SendLocationInfo']['Location_Y']."\n";
+                    $text .= 'Scale:'.$msg['SendLocationInfo']['Scale']."\n";
+                    $text .= 'Label:'.$msg['SendLocationInfo']['Label']."\n";
+                    $text .= 'Poiname:'.$msg['SendLocationInfo']['Poiname']."\n";
+                    $this->response($text);
+                }
             break;
             default:
                 $this->response('这个类型事件还没开发呢！event ');

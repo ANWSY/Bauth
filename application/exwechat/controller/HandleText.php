@@ -13,10 +13,18 @@ class HandleText extends AbstractHandle
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $bool = $this->_saveToDB();
+        
+        // 设置聊天场景
+        $this->_sceneCheck();
+
         //获取用户聊天场景
-        $scene = $this->getScene($this->msg['FromUserName']);
+        $scene = $this->getScene($this->msg['FromUserName'], 'chat');
         if(false !== $scene){
-            // to do
+            $cls = new HandleScene();
+            $ret = $cls->handle($scene);
+            if(!is_bool($ret)){
+                $this->response($ret);
+            }
         }
         // 优先关键词
         $ret1 = $this->_priorityKeyword($this->msg['Content']);
@@ -42,10 +50,27 @@ class HandleText extends AbstractHandle
         $ret = db('we_msg_text')->insert($data);
         return $ret;
     }
+    // 设置和删除场景值
+    private function _sceneCheck()
+    {
+        $keyWord = $this->msg['Content'];
+        // 设置场景
+        if(substr($keyWord, 0, 8) == 'setScene'){
+            $value = substr($keyWord, 9);
+            if(false !== strpos($value, ':')){
+                $arr = explode(':', $value);
+                $this->setScene($this->msg['FromUserName'], $arr[0], $arr[1]);
+            }else{
+                $this->setScene($this->msg['FromUserName'], $value);
+            }
+            exit();
+        }
+    }
     // 网站业务自定义的最高优先级关键字，个人一般情况会有一个开发关键字
     // 进入某聊天场景的关键字等
     private function _priorityKeyword($keyWord='')
     {
+        $keyWord = trim($keyWord);
         switch ($keyWord) {
             //部分自定义优先关键字
             case 'subscribe':$this->response('subscribe');
@@ -53,17 +78,15 @@ class HandleText extends AbstractHandle
             case 'openid':$this->response($this->msg['FromUserName']);
                 break;
             case 'scene':
-                $this->setScene($this->msg['FromUserName'], 'ss');
-                break;
             case 'getScene':
                 $ret = $this->getScene($this->msg['FromUserName']);
                 $msg = $ret ? $ret['sceneValue'] : '无场景';
                 $this->response($msg);
                 break;
             default:
-                return false;
+                break;
         }
-        return true;
+        return false;
     }
     // 数据库中的关键字
     private function _dbKeyword($keyWord='')

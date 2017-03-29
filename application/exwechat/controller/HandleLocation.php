@@ -11,18 +11,27 @@ class HandleLocation extends AbstractHandle
 {
 
     private $msg;
+    /** 
+     * 此处是聊天发送个人位置，
+     * 上报地址位置和菜单(高级)发送地理位置在HandleEvent中有处理
+     */
     public function handle($arrayMsg='', $reylyContext='暂未开发此类型消息')
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $this->saveToDB($this->msg);
-        $text = "聊天中的个人位置\n";
-        $text .= 'Location_X:'.$this->msg['Location_X']."\n";
-        $text .= 'Location_Y:'.$this->msg['Location_Y']."\n";
-        $text .= 'Scale:'.$this->msg['Scale']."\n";
-        $text .= 'Label:'.$this->msg['Label']."\n";
-        // $text .= 'Poiname:'.$this->msg['Poiname'];
-        $this->response($text);
+        if($this->msg['MsgType']){
 
+        }
+        if($this->getScene($msg['openId'], 'location') == 'yes')
+        {
+            $text = "聊天中的个人位置\n";
+            $text .= 'Location_X:'.$this->msg['Location_X']."\n";
+            $text .= 'Location_Y:'.$this->msg['Location_Y']."\n";
+            $text .= 'Scale:'.$this->msg['Scale']."\n";
+            $text .= 'Label:'.$this->msg['Label']."\n";
+            // $text .= 'Poiname:'.$this->msg['Poiname'];
+            $this->response($text);
+        }
         exit; //阻止DEBUG信息输出
     }
 
