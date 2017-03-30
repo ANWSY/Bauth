@@ -37,13 +37,13 @@ class SceneCatch
         }else if($prefix == '??'){
             $value = mb_substr($keyWord, 2, mb_strlen($keyWord), 'UTF-8');
             $ret = $this->getScene($openId, $value);
-            $comment = $ret? $ret['sceneValue']: "$value:场景值是空";
+            $comment = $ret? $ret: "$value:场景值是空";
             echo (new \youwen\exwechat\exXMLMaker())->createText($comment);
             exit;
         }
         $ret = $this->getScene($openId, $type);
         if($ret){
-            return $ret['sceneValue'];
+            return $ret;
         }
         return false;
     }
@@ -62,10 +62,13 @@ class SceneCatch
      */
     public function getScene($openId, $sceneType='chat')
     {
-        // $openId = $this->exRequest->getFromUserName();
         $map['openId'] = $openId;
         $map['sceneType'] = $sceneType;
-        return db('we_scene')->where($map)->find();
+        $ret = db('we_scene')->where($map)->find();
+        if($ret){
+            return $ret['sceneValue'];
+        }
+        return false;
     }
 
     /** 
