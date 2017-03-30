@@ -19,8 +19,8 @@ class HandleText extends AbstractHandle
         $sceneValue = $scene->check($this->msg['Content'], $this->msg['FromUserName'], 'chat');
         if(!is_bool($sceneValue)){
             $this->response($sceneValue);
-        }elseif(is_true($sceneValue)){
-            echo (new \youwen\exwechat\exXMLMaker())->createText($comment);
+        }elseif(true === $sceneValue){
+            echo (new \youwen\exwechat\exXMLMaker())->createText('场景值操作成功');
             exit();
         }
 
