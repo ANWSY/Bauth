@@ -13,19 +13,17 @@ class HandleText extends AbstractHandle
     {
         $this->msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         $bool = $this->_saveToDB();
-        
-        // 设置聊天场景
-        $this->_sceneCheck();
 
-        //获取用户聊天场景
-        $scene = $this->getScene($this->msg['FromUserName'], 'chat');
-        if(false !== $scene){
-            $cls = new HandleScene();
-            $ret = $cls->handle($scene);
-            if(!is_bool($ret)){
-                $this->response($ret);
-            }
+        // 用户场景捕获
+        $scene = new SceneCatch();
+        $sceneValue = $scene->check($this->msg['Content'], $this->msg['FromUserName'], 'chat');
+        if(!is_bool($sceneValue)){
+            $this->response($sceneValue);
+        }elseif(is_true($sceneValue)){
+            echo (new \youwen\exwechat\exXMLMaker())->createText($comment);
+            exit();
         }
+
         // 优先关键词
         $ret1 = $this->_priorityKeyword($this->msg['Content']);
         if(!$ret1){

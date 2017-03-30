@@ -13,6 +13,9 @@ class HandleEvent extends AbstractHandle
         $msg = empty($arrayMsg) ? $this->exRequest->getMsg() : $arrayMsg;
         if('LOCATION' != $msg['Event'] || 'location_select' != $msg['Event']){
             $this->_saveToDB($msg);
+            // 用户场景捕获
+            $scene = new SceneCatch();
+            $sceneRet = $scene->check($this->msg['Content'], $this->msg['FromUserName'], 'location');
         }
         switch ($msg['Event']) {
             // 关注公众号
@@ -51,8 +54,7 @@ class HandleEvent extends AbstractHandle
             case 'LOCATION':
                 $cls = new HandleLocation($msg);
                 $ret = $cls->saveToDB($msg);
-                $scene = $this->getScene($msg['FromUserName'], 'location');
-                if( $scene && $scene['sceneValue'] == 'yes')
+                if( $sceneRet == 'yes')
                 {
                     $text = "微信上报个人位置LOCATION\n";
                     $text .= 'Latitude:'.$msg['Latitude']."\n";
@@ -64,8 +66,7 @@ class HandleEvent extends AbstractHandle
             case 'location_select':
                 $cls = new HandleLocation($msg);
                 $ret = $cls->saveToDB($msg);
-                $scene = $this->getScene($msg['FromUserName'], 'location');
-                if($scene && $scene['sceneValue'] == 'yes')
+                if($sceneRet == 'yes')
                 {
                     $text = "上传个人位置\n";
                     $text .= 'Location_X:'.$msg['SendLocationInfo']['Location_X']."\n";
