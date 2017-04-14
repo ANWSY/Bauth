@@ -13,7 +13,7 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => 'xiaobaiMySQL.com',
+    'hostname'       => 'localhost',
     // 数据库名
     'database'       => 'demo_bauth',
     // 用户名
@@ -21,7 +21,7 @@ return [
     // 密码
     'password'       => 'demo_bauth',
     // 端口
-    'hostport'       => '',
+    'hostport'       => '13307',
     // 连接dsn
     'dsn'            => '',
     // 数据库连接参数
