@@ -26,28 +26,6 @@ abstract class AbstractHandle
     {
     }
 
-    /** 
-     * 获取聊天情景
-     * @return string 返回用户当前聊天场景
-     * @author baiyouwen
-     */
-    public function getScene()
-    {
-        $openId = $this->exRequest->getFromUserName();
-        // do_get_scene_by_openId
-        return false;
-    }
-
-    /** 
-     * 设置用户聊天场景
-     * @author baiyouwen
-     */
-    public function setScene()
-    {
-        
-        \think\Log::write();
-    }
-
     /**
      * 响应信息输出
      * @param  [type] $augment 要返回的内容
@@ -67,5 +45,6 @@ abstract class AbstractHandle
                 echo (new exXMLMaker())->createText('回复消息体类型不可解析');
                 break;
         }
+        exit;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace app\webhooks\controller;
 
-use youwen\exwechat\exLog;
-
 /**
  * 钩子系统
  * GIT钩子通知此URL
@@ -14,13 +12,16 @@ class Index
     public function oschina()
     {
         $json = file_get_contents("php://input");
-        exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
+        file_put_contents(ROOT_PATH.'/runtime/git.oschina_notify_log.txt', date('Y-m-d H:i:s').PHP_EOL, FILE_APPEND);
+        file_put_contents(ROOT_PATH.'/runtime/git.oschina_notify_log.txt', $json.PHP_EOL, FILE_APPEND);
         $arr = json_decode($json, true);
         if(!isset($_GET['xiaobaiDebug'])){
             if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
+                file_put_contents(ROOT_PATH.'/runtime/git.oschina_notify_log.txt', "password wrong".PHP_EOL, FILE_APPEND);
                 exit('0');
             }
             if(!$this->check_sign()){
+                file_put_contents(ROOT_PATH.'/runtime/git.oschina_notify_log.txt', "sign wrong".PHP_EOL, FILE_APPEND);
                 exit();
             }
         }
@@ -30,7 +31,6 @@ class Index
     public function oschina_promiss()
     {
         $json = file_get_contents("php://input");
-        exLog::log($json, 'input', ['path'=>'/runtime/log/webhooks/']);
         $arr = json_decode($json, ture);
 
         if(!isset($arr['password']) || 'youwen2017' == $arr['password']){
